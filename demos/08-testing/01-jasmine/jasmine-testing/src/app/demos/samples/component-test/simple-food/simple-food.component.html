@@ -3,7 +3,7 @@
     <mat-card-title>Food Component - Click to remove</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div *ngFor="let f of food" (click)="deleteFood(f)" class="hoverclick">
+    <div *ngFor="let f of food" (click)="deleteFood(f)" class="foodrow">
       {{ f.name }}
     </div>
   </mat-card-content>

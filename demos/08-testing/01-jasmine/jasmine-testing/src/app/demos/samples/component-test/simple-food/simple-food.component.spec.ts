@@ -1,26 +1,29 @@
-import { of } from 'rxjs';
-import { foodData, serviceResult } from './simple-food-component.data';
-import { SimpleFoodComponent } from './simple-food.component';
-import { TestBed } from '@angular/core/testing';
-import { FoodServiceBS } from '../../food/food.service-bs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
+import { FoodServiceBS } from '../../food/food.service-bs';
+import { foodData, serviceResult } from './simple-food-component.data';
+import { SimpleFoodComponent } from './simple-food.component';
+import { By } from '@angular/platform-browser';
 
 describe('Component - Spy - FoodComponent:', () => {
   let component: SimpleFoodComponent;
-  let fs: any;
+  let fixture: ComponentFixture<SimpleFoodComponent>;
+  let service: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MatCardModule, NoopAnimationsModule],
       declarations: [SimpleFoodComponent],
-      providers: [FoodServiceBS],
+      providers: [{ provide: FoodServiceBS, useValue: { fs: service } }],
     });
 
-    fs = jasmine.createSpyObj(['getFood', 'deleteFood']);
-    fs.getFood.and.returnValue(of(foodData))
-    component = new SimpleFoodComponent(fs);
-    component.ngOnInit()
+    fixture = TestBed.createComponent(SimpleFoodComponent);
+    service = jasmine.createSpyObj(['getFood', 'deleteFood']);
+    service.getFood.and.returnValue(of(foodData))
+    component = new SimpleFoodComponent(service);
+    component.ngOnInit();
   });
 
   it('should call getItems to subscribe data', () => {
@@ -28,7 +31,7 @@ describe('Component - Spy - FoodComponent:', () => {
   })
 
   it('removes the item from the list', () => {
-    fs.deleteFood.and.returnValue(of(serviceResult));
+    service.deleteFood.and.returnValue(of(serviceResult));
     const deletedFood = foodData[3];
     component.deleteFood(deletedFood);
     expect(component.food.length).toBe(3);

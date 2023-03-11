@@ -20,24 +20,14 @@ describe('Service - HttpTest -FoodService', () => {
         imports: [HttpClientTestingModule],
         providers: [FoodServiceBS],
       });
-
     service = TestBed.inject(FoodServiceBS);
     controller = TestBed.inject(HttpTestingController);
-
     // setup the service mock
     const url = `${environment.apiUrl}food`;
     const req = controller.expectOne(url);
     expect(req.request.method).toEqual('GET');
-
     // flushing down mock data
     req.flush(data);
-
-    // make sure all requests are completed
-    controller.verify();
-
-    // set the state
-    const fs: any = service;
-    fs.setState(data);
   });
 
   // Verify that there are no pending HTTP requests
