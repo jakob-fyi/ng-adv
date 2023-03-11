@@ -13,13 +13,13 @@ export class FoodListComponent implements OnInit {
   constructor(private fs: FoodServiceBS) { }
 
   ngOnInit() {
-    this.fs.getItems().subscribe((data) => {
+    this.fs.getFood().subscribe((data) => {
       this.food = data;
     });
   }
 
   deleteFood(food: FoodItem) {
     this.food = this.food.filter((i) => i != food);
-    this.fs.deleteItem(food);
+    this.fs.deleteFood(food);
   }
 }

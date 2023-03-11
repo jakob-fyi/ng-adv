@@ -29,17 +29,17 @@ export class FoodServiceBS {
     this.Items.next(this.items);
   }
 
-  getItems(): Observable<FoodItem[]> {
+  getFood(): Observable<FoodItem[]> {
     return this.Items.asObservable();
   }
 
-  deleteItem(item: FoodItem): Observable<boolean> {
+  deleteFood(item: FoodItem): Observable<boolean> {
     this.items = this.items.filter((f) => _.isEqual(f, item) == false);
     this.Items.next(this.items);
     return of(true);
   }
 
-  addItem(item: FoodItem): Observable<boolean> {
+  addFood(item: FoodItem): Observable<boolean> {
     this.items.push(item);
     this.Items.next(this.items);
     return of(true);

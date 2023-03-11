@@ -47,32 +47,32 @@ describe('Service - HttpTest -FoodService', () => {
 
   it('should be created and correctly setup', () => {
     expect(service).toBeTruthy();
-    service.getItems().subscribe((items) => {
+    service.getFood().subscribe((items) => {
       expect(items).toBe(data);
     });
   });
 
   it('should return initialized the data', (done) => {
-    service.getItems().subscribe((items) => {
+    service.getFood().subscribe((items) => {
       expect(items.length).toEqual(2);
       done();
     });
   });
 
   it('should create a post in an array', (done) => {
-    service.addItem({ id: 3, name: 'Cannelloni', rating: 4 },);
+    service.addFood({ id: 3, name: 'Cannelloni', rating: 4 },);
 
-    service.getItems().subscribe((items) => {
+    service.getFood().subscribe((items) => {
       expect(items.length).toEqual(3);
       done();
     });
   });
 
   it('should return the correct amount of items', (done) => {
-    service.addItem({ id: 1, name: 'Pad Thai', rating: 5 });
-    service.addItem({ id: 2, name: 'Butter Chicken', rating: 5 });
+    service.addFood({ id: 1, name: 'Pad Thai', rating: 5 });
+    service.addFood({ id: 2, name: 'Butter Chicken', rating: 5 });
 
-    service.getItems().subscribe((items) => {
+    service.getFood().subscribe((items) => {
       expect(items.length).toEqual(4);
       expect(items[1].name).toEqual('Butter Chicken');
       done();
@@ -80,9 +80,9 @@ describe('Service - HttpTest -FoodService', () => {
   });
 
   it('should have the correct number of items after delete', (done) => {
-    service.deleteItem({ id: 1, name: 'Pad Thai', rating: 5 });
+    service.deleteFood({ id: 1, name: 'Pad Thai', rating: 5 });
 
-    service.getItems().subscribe((items) => {
+    service.getFood().subscribe((items) => {
       expect(items.length).toEqual(1);
       expect(items).toEqual([{ id: 2, name: 'Butter Chicken', rating: 5 }]);
       done();
