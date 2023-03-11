@@ -1,43 +1,40 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { FoodServiceBS } from '../../food/food.service-bs';
 import { foodData, serviceResult } from './simple-food-component.data';
 import { SimpleFoodComponent } from './simple-food.component';
+import { By } from '@angular/platform-browser';
 
 describe('Component - Spy - FoodComponent:', () => {
-  let comp: SimpleFoodComponent;
-  let fs;
+  let component: SimpleFoodComponent;
+  let fixture: ComponentFixture<SimpleFoodComponent>;
+  let service: any;
 
-  beforeEach(() => { });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [MatCardModule, NoopAnimationsModule],
+      declarations: [SimpleFoodComponent],
+      providers: [{ provide: FoodServiceBS, useValue: { fs: service } }],
+    });
+
+    fixture = TestBed.createComponent(SimpleFoodComponent);
+    service = jasmine.createSpyObj(['getFood', 'deleteFood']);
+    service.getFood.and.returnValue(of(foodData))
+    component = new SimpleFoodComponent(service);
+    component.ngOnInit();
+  });
+
+  it('should call getItems to subscribe data', () => {
+    expect(component.food.length).toBe(4)
+  })
 
   it('removes the item from the list', () => {
-    // in real life this would happen in beforeEach
-    fs = jasmine.createSpyObj(['getItems', 'deleteItem']);
-    comp = new SimpleFoodComponent(fs);
-
-    comp.food = foodData;
-    fs.deleteItem.and.returnValue(of(serviceResult));
-    comp.deleteFood(foodData[3]);
-
-    expect(comp.food.length).toBe(3);
+    service.deleteFood.and.returnValue(of(serviceResult));
+    const deletedFood = foodData[3];
+    component.deleteFood(deletedFood);
+    expect(component.food.length).toBe(3);
   });
-
-  it('should call deleteItem', () => {
-    // in real life this would happen in beforeEach
-    fs = jasmine.createSpyObj(['getItems', 'deleteItem']);
-    comp = new SimpleFoodComponent(fs);
-
-    comp.food = foodData;
-    fs.deleteItem.and.returnValue(of(serviceResult));
-
-    comp.deleteFood(foodData[3]);
-    expect(fs.deleteItem).toHaveBeenCalledWith(foodData[3]);
-  });
-  it('should call getItems to subscribe data', () => {
-    // in real life this would happen in beforeEach
-    fs = jasmine.createSpyObj(['getItems', 'deleteItem']);
-    comp = new SimpleFoodComponent(fs);
-    fs.getItems.and.returnValue(of(foodData))
-    comp.ngOnInit()
-    expect(comp.food.length).toBe(4)
-  })
 
 });

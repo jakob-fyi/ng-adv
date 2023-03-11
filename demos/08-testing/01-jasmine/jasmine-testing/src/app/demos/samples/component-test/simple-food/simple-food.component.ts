@@ -13,13 +13,13 @@ export class SimpleFoodComponent implements OnInit {
   food: FoodItem[] = [];
 
   ngOnInit() {
-    this.fs.getItems().subscribe((data) => {
+    this.fs.getFood().subscribe((data) => {
       this.food = data;
     });
   }
 
   deleteFood(food: FoodItem) {
-    this.fs.deleteItem(food).subscribe(() => {
+    this.fs.deleteFood(food).subscribe(() => {
       this.food = this.food.filter((i) => i != food);
     });
   }

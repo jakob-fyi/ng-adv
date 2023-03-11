@@ -28,7 +28,7 @@ describe('Component - Integration Test', () => {
   let de: DebugElement;
 
   beforeEach(() => {
-    fs = jasmine.createSpyObj(['getItems', 'deleteItem']);
+    fs = jasmine.createSpyObj(['getFood', 'deleteFood']);
 
     const module = {
       declarations: [FoodListComponent, FoodRowComponent, RatingPipe],
@@ -43,7 +43,7 @@ describe('Component - Integration Test', () => {
   });
 
   it('should render each FoodItem as FoodItemRow', () => {
-    fs.getItems.and.returnValue(of(foodData));
+    fs.getFood.and.returnValue(of(foodData));
     fixture.detectChanges();
 
     const rows = fixture.debugElement.queryAll(By.directive(FoodRowComponent));
@@ -52,7 +52,7 @@ describe('Component - Integration Test', () => {
   });
 
   it('should have three rows when an item is deleted', fakeAsync(() => {
-    fs.getItems.and.returnValue(of(foodData));
+    fs.getFood.and.returnValue(of(foodData));
     fixture.autoDetectChanges();
 
     spyOn(comp, 'deleteFood');
@@ -60,7 +60,7 @@ describe('Component - Integration Test', () => {
     const row = deRow.componentInstance;
     row.delete.emit(deleteItem);
 
-    fs.deleteItem.and.returnValue(of(serviceResult));
+    fs.deleteFood.and.returnValue(of(serviceResult));
     expect(comp.deleteFood).toHaveBeenCalledWith(deleteItem);
   }));
 });
