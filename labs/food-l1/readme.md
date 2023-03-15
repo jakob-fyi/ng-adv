@@ -1,4 +1,4 @@
-# Food App Project - Lab 1
+# Food App Project - Lab Theming
 
 - Implement a Custom Material Theme with a Custom Color Scheme of your choice
 
