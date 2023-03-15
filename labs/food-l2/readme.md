@@ -1,9 +1,10 @@
-# Food App Project - Lab 2
+# Food App Project - Reactive Forms
 
-## Reactive Programming
+- Refactor `food-edit.component` to be implemented as a Reactive Form using FormBuilder. 
+- Implement Validation for the name filed to be required with min lenght of 3 and the price filed to be positive
 
-- Refactor the filter in the food list to use a FormControl and a Data- and Action Stream.
+    ![edit-form](_images/edit-form.png)
 
-- Use a responsive mat-sidenav-container to enable toggle the left nav. Implement the toggle functionality in an stateful `menu.service.ts` using a BehaviourSubject. You can refactor this to use ngrx later on.
+## Guide
 
-  ![buttons](_images/responsive-sidenav.png)
+
