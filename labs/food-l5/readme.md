@@ -1,59 +1,47 @@
-# Authentication using NgRx - Lab 4
+# Food App - Routing
 
-- Implement Firbase Auth using NgRx - Option A
-- Implement Azure AD Auth using NgRx - Option B
+- Implement Routing for the navbar elements.
 
-## Implement Firbase Auth using NgRx
+    - Add a `home.component.ts` and a `about.component.ts` using the [Angular CLI](https://angular.io/cli/generate#component-command)
+    
+    - Replace `<app-food-container></app-food-container>` with a `<router-outlet></router-outlet>` in `app.component.html`
+    
+    - Implement `app-routing.module.ts` and add the following routes: 
 
-- Extend environment.ts to provide the Firebase Config and the ability to turn off authentication
-- Implement Firebase Loging & Register
-- Modifiy `app.component.ts` to show a Login-Splash or the app
+        ```
+        { path: "", component: HomeComponent },
+        { path: "food", component: FoodContainerComponent },
+        { path: "about", component: AboutComponent },
+        ```
+    - Add [RouterLink](https://angular.io/api/router/RouterLink) directives to `navbar.component.html` to enable navigation. Apply a style for the active link - use [this reference](https://github.com/arambazamba/ng-dev/blob/main/demos/04-routing/routing-modules/src/app/shared/navbar/navbar.component.ts)
 
-Example:
+    - Test the routing
 
-```html
-<div *ngIf="(loggedIn$ | async) == true">
-  <div>
-    <app-navbar></app-navbar>
-  </div>
-  <div class="mainrow">
-    <mat-sidenav-container style="width: 100%">
-      <mat-sidenav
-        #sidenav
-        [opened]="menuVisible$ | async"
-        [mode]="menuPosition$ | async"
-        class="sidebar"
-      >
-        Sidenav content
-      </mat-sidenav>
-      <mat-sidenav-content class="workbench">
-        <router-outlet></router-outlet>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  </div>
-</div>
+- Refactor `app/food` to be a lazy loaded module in `app-routing.module.ts`    
+    
+    - Add a [feature module](https://angular.io/guide/feature-modules) using the [Angular CLI](https://angular.io/cli/generate#module-command) and 
+    use the Code Splitting Pattern 
 
-<div
-  *ngIf="(loggedIn$ | async) == false"
-  fxLayout="column"
-  fxLayoutAlign="center center"
-  class="loginsplash"
->
-  <app-login-splash>
-    <div class="login">
-      <app-login></app-login>
-    </div>
-    <div class="register">
-      <app-register></app-register>
-    </div>
-  </app-login-splash>
-</div>
-```
+        ```
+        ng g module [NAME] --route [ROUTE] --module [PARENT-MODULE]
+        ```
 
-Sample Login Splash:
+        ```
+        ng g module food --route food-v2 --module app.module.ts
+        ```
+        
+        >Note: To avoid a route conflict with the existing `food`-route in `app-routing.module.ts` you could use `food-v2` as input for the `--route` param. You can delete the old route later on.
 
-![login-splash](_images/login-splash.png)
+    - Add the [FormsModule](https://angular.io/api/forms/FormsModule) to `food.module.ts` to support `ngModel`-binding
 
-## Implement Azure AD Auth using NgRx
+    - Move the three food components to the declarations of the new feature module, remove them from `app.module.ts`
 
-Use Module 05-Routing-Security/03-MSAL as Solution
+        ```javascript
+        @NgModule({
+            declarations: [FoodContainerComponent, FoodListComponent, FoodEditComponent],
+        ```    
+    - Update `food-routing.module.ts`:
+
+        ```
+        { path: '', component: FoodContainerComponent }        
+        ```        
