@@ -1,0 +1,20 @@
+<div fxLayout="column">
+  
+  <mat-toolbar color="primary">
+   <mat-toolbar-row>
+    <button mat-raised-button (click)="addFood()">Add Food</button>
+   </mat-toolbar-row>
+  </mat-toolbar>
+
+  <app-food-list
+    [food]="food"
+    (foodSelected)="selectFood($event)"
+    (foodDeleted)="deleteFood($event)"
+  ></app-food-list>
+  
+  <app-food-edit
+    *ngIf="selected"
+    [food]="selected"
+    (saveFood)="saveFood($event)"
+  ></app-food-edit>
+</div>
