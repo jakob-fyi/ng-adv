@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, timer } from 'rxjs';
+import { interval } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class TemplateVsContainerComponent implements OnInit {
   currentTime = interval(100).pipe(map(() => new Date().toTimeString()));
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }
