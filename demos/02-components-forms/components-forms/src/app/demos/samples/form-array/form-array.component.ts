@@ -13,9 +13,9 @@ export class FormArrayComponent implements OnInit {
     skillsGrp: this.fb.array([]),
   });
 
-  constructor(private fb: FormBuilder, private ps: PersonService) {}
+  constructor(private fb: FormBuilder, private ps: PersonService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   addSkill() {
     const skillsGrp = this.skillForm.controls.skillsGrp as FormArray;
@@ -29,9 +29,5 @@ export class FormArrayComponent implements OnInit {
 
   saveForm() {
     console.log('form saved', this.skillForm);
-  }
-
-  getElementsInFormArray() {
-    return (this.skillForm.controls.skillsGrp as FormArray).controls;
   }
 }

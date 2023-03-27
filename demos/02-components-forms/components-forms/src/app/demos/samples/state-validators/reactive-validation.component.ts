@@ -27,7 +27,7 @@ export class ReactiveValidationComponent {
       },
     ],
     lastname: [this.person.lastname, [Validators.required]],
-    age: [this.person.age, [Validators.min(6), Validators.max(110)]],
+    age: [this.person.age, [Validators.min(6), Validators.max(110)], [], { nonNullable: true }],
     gender: [this.person.gender],
     email: [
       this.person.email,
@@ -45,7 +45,7 @@ export class ReactiveValidationComponent {
     private fb: FormBuilder,
     private ps: PersonService,
     private mailExistsValidator: AsyncMailExistsValidator //Sample for custom Async Validator
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.ps

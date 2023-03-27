@@ -9,10 +9,9 @@ import { UntypedFormControl, Validators, FormControl } from '@angular/forms';
 export class FormControlComponent implements OnInit {
   constructor() { }
 
-  name = new FormControl('', [
-    Validators.required,
-    Validators.minLength(3),
-  ]);
+  name = new FormControl('',
+    [Validators.required, Validators.minLength(3)],
+    []);
   postal = new UntypedFormControl('3544', [Validators.minLength(4)]);
   city = new FormControl<string>('Idolsberg', [Validators.maxLength(15)]);
 
