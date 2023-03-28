@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav [opened]="ms.visible$ | async" [mode]="sidenavMode">
+  <mat-sidenav #sidenav [opened]="sidenavVisible" [mode]="sidenavMode">
     <mat-toolbar color="accent">
       <mat-toolbar-row>
         {{ title }}
@@ -13,7 +13,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    
+
     <div
       class="nav-content"
       gdAreas="toolbar toolbar | loading loading  | workbench sidebar | editor sidebar"
@@ -32,9 +32,9 @@
       </div>
       <div gdArea="loading">
         <app-loading *ngIf="isLoading"></app-loading>
-      </div>      
+      </div>
       <div gdArea="workbench">
-        <router-outlet></router-outlet>            
+        <router-outlet></router-outlet>
       </div>
       <div gdArea="sidebar" class="sidebar">
         <app-side-panel></app-side-panel>

@@ -33,7 +33,7 @@ export class MenuService {
     return this.http.get<MenuItem[]>('/assets/top-items.json');
   }
 
-  toggleMenu() {
+  toggleMenuVisibility() {
     let status = !this.visible$.getValue();
     this.visible$.next(status);
   }

@@ -25,28 +25,16 @@ export class MenuFacade {
     private mediaObserver: MediaObserver,
     private store: Store<AppState>
   ) {
-    this.init();
+    this.initMenu();
   }
 
-  get sideNavEnabled() {
-    return this.store.select(getSideNavEnabled);
-  }
-
-  get sideNavVisible() {
-    return this.store.select(getSideNavVisible);
-  }
-
-  get sideNavPosition() {
-    return this.store.select(getSideNavPosition);
-  }
-
-  private init() {
+  private initMenu() {
     combineLatest([
       this.mediaObserver.asObservable().pipe(
         filter((changes: MediaChange[]) => changes.length > 0),
         map((changes: MediaChange[]) => changes[0])
       ),
-      this.sideNavEnabled,
+      this.getSideNavEnabled(),
     ]).subscribe(([change, enabled]) => {
       const visible = this.adjustSidenavToScreen(change.mqAlias);
       const position = this.adjustSidenavToScreen(change.mqAlias)
@@ -56,6 +44,18 @@ export class MenuFacade {
       this.store.dispatch(changeSideNavPosition({ position }));
       this.store.dispatch(changeSideNavVisible({ visible }));
     });
+  }
+
+  getSideNavEnabled() {
+    return this.store.select(getSideNavEnabled);
+  }
+
+  getSideNavVisible() {
+    return this.store.select(getSideNavVisible);
+  }
+
+  getSideNavPosition() {
+    return this.store.select(getSideNavPosition);
   }
 
   setSideNavEnabled(enabled: boolean) {
