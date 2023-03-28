@@ -21,8 +21,9 @@ export class DemoContainerComponent implements OnInit {
   title: string = environment.title;
   header = 'Please select a demo';
   demos$ = this.store.select(getAllDemos);
-  sidenavMode: MatDrawerMode = 'side';
   isLoading = true;
+  sidenavMode: MatDrawerMode = 'side';
+  sidenavVisible: boolean = true;
 
   showEditor$ = this.eb
     .getCommands()
@@ -37,12 +38,12 @@ export class DemoContainerComponent implements OnInit {
     public ls: LoadingService,
     private store: Store<DemoState>,
     private eb: SidePanelService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.setMenu();
+    this.getDemos();
     this.setMetadata();
-    this.setMenuPosition();
+    this.setMenu();
     this.getWorbenchStyle();
     this.subscribeLoading();
     this.store.dispatch(loadDemos());
@@ -54,13 +55,17 @@ export class DemoContainerComponent implements OnInit {
     });
   }
 
-  setMenuPosition() {
+  setMenu() {
     this.ms.position$.subscribe(
       (mode: any) => (this.sidenavMode = mode as MatDrawerMode)
     );
+
+    this.ms.visible$.subscribe(
+      (visible: any) => (this.sidenavVisible = visible)
+    );
   }
 
-  setMenu() {
+  getDemos() {
     this.demos$ = this.store.select(getAllDemos);
   }
 
@@ -69,8 +74,8 @@ export class DemoContainerComponent implements OnInit {
     this.ms.visible$.subscribe((visible: any) => {
       result = visible
         ? {
-            'margin-left': '5px',
-          }
+          'margin-left': '5px',
+        }
         : {};
     });
     return result;
@@ -94,8 +99,8 @@ export class DemoContainerComponent implements OnInit {
         this.header =
           route.component != null
             ? `Component: ${route.component
-                .toString()
-                .substring(6, route.component.toString().indexOf('{') - 1)}`
+              .toString()
+              .substring(6, route.component.toString().indexOf('{') - 1)}`
             : '';
       });
   }
