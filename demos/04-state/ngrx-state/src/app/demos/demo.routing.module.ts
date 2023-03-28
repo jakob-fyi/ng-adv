@@ -36,6 +36,7 @@ export const demoRoutes: Routes = [
         path: 'change-detector-ref',
         component: ChangeDetectorRefComponent,
       },
+      { path: 'ebus', component: EventbusComponent },
     ],
   },
 ];
