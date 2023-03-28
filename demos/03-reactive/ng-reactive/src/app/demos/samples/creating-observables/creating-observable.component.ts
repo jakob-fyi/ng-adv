@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import { from, Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-simple-observable',
@@ -9,12 +9,18 @@ import { filter, map } from 'rxjs/operators';
   styleUrls: ['./creating-observable.component.scss'],
 })
 export class CreatingObservableComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
   onErr = (err: any) => console.log(err);
   onComplete = () => console.log('complete');
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  useOf() {
+    of(2, 5, 9, 12, 22).subscribe((data) => console.log('of(): ', data));
+
+    of([2, 5, 9, 12, 22]).subscribe((data) => console.log('of(): ', data));
+  }
 
   useObsFrom() {
     let arr = [2, 5, 9, 12, 22];
@@ -36,11 +42,8 @@ export class CreatingObservableComponent implements OnInit {
     from(arr).subscribe(observer);
   }
 
-  useOf() {
-    of([2, 5, 9, 12, 22]).subscribe((data) => console.log('of(): ', data));
-  }
-
   useOfwithSpread() {
+    //don't use this pattern, it's just for demo purpose to show the difference between of and from
     of(...[2, 5, 9, 12, 22]).subscribe((data) => console.log(data));
   }
 
@@ -67,6 +70,10 @@ export class CreatingObservableComponent implements OnInit {
     });
 
     skills$.subscribe((data) => console.log('skill item: ', data));
+
+    //Simple cast and pipe / delay operator
+    const skillsx$ = of(skills).pipe(delay(500));
+
   }
 
   // Wraps an function that uses callbacks (navigator.geolocation.getCurrentPosition) into an observable
@@ -103,9 +110,7 @@ export class CreatingObservableComponent implements OnInit {
 
     // from casts a promise to an observable so that it can be subscribe
     from(axios(url)).subscribe(
-      (data) => console.log('data from axios', data),
-      (err) => console.log('err:', err),
-      () => console.log('complete')
+      (data) => console.log('data from axios', data)
     );
   }
 

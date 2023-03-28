@@ -109,6 +109,11 @@
       "url": "flexlayoutapi",
       "title": "Flex Layout Api",
       "component": "FlexLayoutApiComponent"
+    },
+    {
+      "url": "statefull",
+      "title": "Statefull Service",
+      "component": "StatefullComponent"
     }
   ],
   "skills": [

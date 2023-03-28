@@ -16,7 +16,7 @@ export class AsyncPipeComponent implements OnInit {
   tasks: TaskItem[];
 
   // Reactive declarative Approach using async pipe
-  tasks$: Observable<TaskItem[]> = this.ts.getTasks().pipe(tap((data) => console.log(data)));
+  tasks$: Observable<TaskItem[]> = this.ts.getTasks().pipe(tap((data) => console.log("getting data from service:", data)));
 
   completed$: Observable<TaskItem> = this.tasks$.pipe(
     mergeMap((tasks: TaskItem[]) => tasks),
@@ -24,10 +24,6 @@ export class AsyncPipeComponent implements OnInit {
   );
 
   ngOnInit() {
-    this.getDataClassic();
-  }
-
-  getDataClassic() {
     this.ts.getTasks().subscribe((data) => {
       this.tasks = data;
     });
