@@ -13,9 +13,9 @@ import { SnackbarService } from '../snackbar/snackbar.service';
 export class NavbarComponent implements OnInit {
   constructor(private ms: MenuService, private sns: SnackbarService) {}
 
-  editorDisplayed: boolean;
-  rootRoutes: Route[];
-  menuItems: Observable<MenuItem[]>;
+  title = 'Advanced Angular Development';
+  editorDisplayed: boolean = false;
+  menuItems: Observable<MenuItem[]> | null = null;
 
   ngOnInit() {
     this.editorDisplayed = false;
@@ -27,6 +27,6 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleApps() {
-    this.sns.displayAlert('Apps', 'Not implemented! - just a mock');
+    this.sns.displayAlert('Apps', 'Not implemented - just a mock');
   }
 }

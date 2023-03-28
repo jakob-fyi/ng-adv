@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { MediaObserver, MediaChange } from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { MenuItem } from './menu-item.model';
 
@@ -8,14 +9,12 @@ import { MenuItem } from './menu-item.model';
   providedIn: 'root',
 })
 export class MenuService {
-  constructor(private mediaObserver: MediaObserver) {
+  constructor(private mediaObserver: MediaObserver, private http: HttpClient) {
     this.handleChange();
   }
 
-  private visible = true;
-  visible$: BehaviorSubject<boolean> = new BehaviorSubject(this.visible);
-  private position = 'side';
-  position$: BehaviorSubject<string> = new BehaviorSubject(this.position);
+  visible$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  position$: BehaviorSubject<string> = new BehaviorSubject('side');
 
   private handleChange() {
     this.mediaObserver
@@ -31,15 +30,11 @@ export class MenuService {
   }
 
   getTopItems(): Observable<MenuItem[]> {
-    return of([
-      { label: 'Home', url: '' },
-      { label: 'Demos', url: 'demos' },
-      { label: 'Admin', url: 'admin' },
-    ]);
+    return this.http.get<MenuItem[]>('/assets/top-items.json');
   }
 
   toggleMenu() {
-    this.visible = !this.visible;
-    this.visible$.next(this.visible);
+    let status = !this.visible$.getValue();
+    this.visible$.next(status);
   }
 }

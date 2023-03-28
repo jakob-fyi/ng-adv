@@ -27,11 +27,12 @@ export class DemoContainerComponent implements OnInit {
     private route: ActivatedRoute,
     public ms: MenuService,
     public ls: LoadingService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.setMenu();
     this.setMetadata();
+    this.setMenuPosition();
     this.getWorbenchStyle();
     this.subscribeLoading();
   }
@@ -57,8 +58,8 @@ export class DemoContainerComponent implements OnInit {
     this.ms.visible$.subscribe((visible: any) => {
       result = visible
         ? {
-            'margin-left': '5px',
-          }
+          'margin-left': '5px',
+        }
         : {};
     });
     return result;
@@ -82,8 +83,8 @@ export class DemoContainerComponent implements OnInit {
         this.header =
           route.component != null
             ? `Component: ${route.component
-                .toString()
-                .substring(6, route.component.toString().indexOf('{') - 1)}`
+              .toString()
+              .substring(6, route.component.toString().indexOf('{') - 1)}`
             : '';
       });
   }
