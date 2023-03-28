@@ -28,6 +28,11 @@ import { MarbleTestingComponent } from './samples/marble-testing/marble-testing.
 import { SignPadComponent } from './samples/unsubscribing/sign-pad/sign-pad.component';
 import { ImperativeComponent } from './samples/imperative/imperative.component';
 import { ReifiedReactiveComponent } from './samples/reified-reactive/reified-reactive.component';
+import { StatefullComponent } from './samples/statefull/statefull.component';
+import { EventbusComponent } from './samples/eventbus/eventbus.component';
+import { ListComponent } from './samples/statefull/list/list.component';
+import { KpiComponent } from './samples/statefull/kpi/kpi.component';
+import { DemoRowComponent } from './demo-row/demo-row.component';
 
 const demoRoutes: Routes = [
   {
@@ -54,6 +59,8 @@ const demoRoutes: Routes = [
       { path: 'caching', component: CachingComponent },
       { path: 'actionstreams', component: ActionStreamsComponent },
       { path: 'marble-testing', component: MarbleTestingComponent },
+      { path: 'statefull', component: StatefullComponent },
+      { path: 'ebus', component: EventbusComponent },
     ],
   },
 ];
@@ -81,6 +88,11 @@ const demoRoutes: Routes = [
     SignPadComponent,
     ImperativeComponent,
     ReifiedReactiveComponent,
+    StatefullComponent,
+    EventbusComponent,
+    ListComponent,
+    KpiComponent,
+    DemoRowComponent
   ],
   imports: [
     CommonModule,
@@ -97,4 +109,4 @@ const demoRoutes: Routes = [
   ],
   providers: [],
 })
-export class DemosModule {}
+export class DemosModule { }

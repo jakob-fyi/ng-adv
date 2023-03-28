@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay } from 'rxjs/operators';
+import { delay, shareReplay } from 'rxjs/operators';
 import { TaskItem } from './task-item.model';
 
 @Injectable({
@@ -12,6 +12,9 @@ export class TaskService {
   getTasks() {
     return this.httpClient
       .get<TaskItem[]>('http://localhost:3000/tasks')
-      .pipe(delay(1000));
+      .pipe(
+        delay(1000),
+        shareReplay(5)
+      );
   }
 }

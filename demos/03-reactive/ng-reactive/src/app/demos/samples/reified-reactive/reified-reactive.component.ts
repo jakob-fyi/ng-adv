@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { combineLatestWith, map, Observable, startWith } from 'rxjs';
-import { SkillsService } from '../../skills/skills.service';
+import { combineLatestWith, map, startWith } from 'rxjs';
 import { Skill } from '../../skills/skills';
+import { SkillsService } from '../../skills/skills.service';
 
 @Component({
   selector: 'app-reified-reactive',
@@ -11,6 +11,7 @@ import { Skill } from '../../skills/skills';
 })
 export class ReifiedReactiveComponent {
   filter$ = new FormControl('', { nonNullable: true });
+
   skills$ = this.service.getSkills().pipe(
     // initialization: startWith('') will emit an empty string to the stream
     combineLatestWith(this.filter$.valueChanges.pipe(startWith(''))),

@@ -1,24 +1,6 @@
 {
   "demos": [
     {
-      "url": "statefull",
-      "title": "Statefull Service",
-      "component": "StatefullComponent",
-      "id": 1,
-      "topicid": 1,
-      "visible": true,
-      "sortOrder": 0
-    },
-    {
-      "url": "ebus",
-      "title": "EventBus",
-      "component": "EventbusComponent",
-      "id": 2,
-      "topicid": 1,
-      "visible": true,
-      "sortOrder": 2
-    },
-    {
       "url": "app-state",
       "title": "App State",
       "component": "AppStateComponent",

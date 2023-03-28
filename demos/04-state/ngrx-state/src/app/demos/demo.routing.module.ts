@@ -21,8 +21,6 @@ export const demoRoutes: Routes = [
     component: DemoContainerComponent,
 
     children: [
-      { path: 'statefull', component: StatefullComponent },
-      { path: 'ebus', component: EventbusComponent },
       { path: 'demos-state', component: DemosStateComponent },
       { path: 'demos-list', component: DemoListHostComponent },
       { path: 'app-state', component: AppStateComponent },

@@ -16,3 +16,5 @@ this.sub$.next(10);
 this.sub$.subscribe((val) => console.log('Subsciber Late', val));
 this.sub$.next(20);
 ```
+
+Explain the use of the BehaviorSubject in menu.service.ts.
