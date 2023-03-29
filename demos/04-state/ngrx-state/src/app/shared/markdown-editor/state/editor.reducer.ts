@@ -42,6 +42,7 @@ export const editorReducer = createReducer(
   on(
     MarkdownEditorActions.loadcommentsfailure,
     MarkdownEditorActions.savecommentsfailure,
+    MarkdownEditorActions.deletecommentsfailure,
     (state, action) => {
       return { ...state };
     }

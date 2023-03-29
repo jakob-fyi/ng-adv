@@ -26,6 +26,7 @@ import { AppInitService, initFactory } from './app-init/app-init.service';
 import { configFactory } from './app-init/config.factory';
 import { ConfigService } from './app-init/config.service';
 import { EntityDataModule } from '@ngrx/data';
+import { GlobalErrService } from './error/global-err-handler';
 // import { GlobalErrService } from './error/global-err-handler';
 // import { HttpErrorInterceptor } from './error/globle-http-err-handler';
 // import { FBAuthInterceptor } from './auth/fbauth.interceptor';
@@ -81,16 +82,10 @@ import { EntityDataModule } from '@ngrx/data';
       deps: [ConfigService],
       multi: true,
     },
-    // {
-    //   provide: ErrorHandler,
-    //   useClass: GlobalErrService,
-    // },
-    // { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: HttpErrorInterceptor,
-    //   multi: true,
-    // },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrService,
+    },
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: AuthInterceptorService,
@@ -101,6 +96,12 @@ import { EntityDataModule } from '@ngrx/data';
     //   useClass: FormatInterceptorService,
     //   multi: true,
     // },
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: HttpErrorInterceptor,
+    //   multi: true,
+    // },
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: RetryInterceptorService,
@@ -109,4 +110,4 @@ import { EntityDataModule } from '@ngrx/data';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
