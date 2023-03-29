@@ -16,7 +16,7 @@ Create a workspace demo-app, add Angular:
 npx create-nx-workspace demo-app-ws --preset angular --appName demo-app
 ```
 
->Note: To spare yourself from executing nx-cli using npm you could also install nx-cli: `npm i -g nx`
+>Note: To spare yourself from executing nx-cli using npm you could also install nx-cli: `npm i -g create-nx-workspace` and `npm i -g nx`
 
 ![nx-scaffold](_images/nx-scaffold.jpg)
 
@@ -44,10 +44,10 @@ npx nx s -o demo-app
 
 ## Button Implementation
 
-Add a library project:
+Add a library project from the root of the nx workspace:
 
 ```typescript
-ng g @nrwl/angular:lib ux-controls
+npx nx g @nrwl/angular:lib ux-controls --buildable --publishable --importPath my-ux-controls
 ```
 
 >Note: `@nrwl/angular:lib` contains the Angular extensions. Scaffolding can also be done using [Nx Console](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console)
@@ -57,7 +57,7 @@ ng g @nrwl/angular:lib ux-controls
 Add a split component. Notice that Nx registeres the component in the module 
 
 ```typescript
-ng g component ux-split --project=ux-controls --export --selector=ux-split
+nx g @nrwl/angular:component  ux-split --selector ux-split --export --project=ux-controls 
 ```
 
 Add Angular Material & Angular FlexLayout to the workspace to use it in the `ux-controls` project:
@@ -128,7 +128,30 @@ Update `ux-split.component.scss`:
 Build the ux-controls project:
 
 ```
-npx nx build ux-controls
+nx build ux-controls
+```
+
+Import the `UxControlsModule` in the `demoapp` project:
+
+```typescript
+import { UxControlsModule } from '../../../../libs/ux-controls/src/lib/ux-controls.module';
+
+@NgModule({
+  declarations: [AppComponent, NxWelcomeComponent],
+  imports: [
+    ...
+    UxControlsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule { }
+```
+
+Test your first component:
+
+```
+nx serve --project demoapp
 ```
 
 Add a second app used for dependency graph later on:
@@ -140,7 +163,7 @@ nx generate @nrwl/angular:app ng-otherapp --routing --style=scss
 Add Material to apps\demo-app:
 
 ```
-npx nx g @angular/material:ng-add --project demo-app
+nx g @angular/material:ng-add --project demoapp
 ```
 
 Implement the Material Module in the lib
