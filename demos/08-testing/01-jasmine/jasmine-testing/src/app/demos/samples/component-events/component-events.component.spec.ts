@@ -2,21 +2,17 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { By } from '@angular/platform-browser';
 import { ComponentEventsComponent } from './component-events.component';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('Component - Events - EventsComponent', () => {
   let component: ComponentEventsComponent;
   let fixture: ComponentFixture<ComponentEventsComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ComponentEventsComponent],
-        imports: [MatCardModule],
-      }).compileComponents();
-    })
-  );
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ComponentEventsComponent],
+      imports: [MatCardModule, MatButtonModule],
+    }).compileComponents();
     fixture = TestBed.createComponent(ComponentEventsComponent);
     component = fixture.componentInstance;
   });
@@ -26,7 +22,7 @@ describe('Component - Events - EventsComponent', () => {
   });
 
   it('should increment the count - triggerEventHandler', () => {
-    const divClick = fixture.debugElement.query(By.css('#clickable'));
+    const divClick = fixture.debugElement.query(By.css('button'));
     divClick.triggerEventHandler('click', {});
 
     expect(component.count).toBe(1);
@@ -37,7 +33,7 @@ describe('Component - Events - EventsComponent', () => {
   });
 
   it('should increment the count - Native Api', () => {
-    const divClick = fixture.debugElement.query(By.css('#clickable'));
+    const divClick = fixture.debugElement.query(By.css('button'));
     divClick.nativeElement.click();
     divClick.nativeElement.click();
 

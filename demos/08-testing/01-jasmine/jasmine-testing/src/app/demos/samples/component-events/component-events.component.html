@@ -3,7 +3,7 @@
     <mat-card-title>ComponentEventsComponent</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div id="clickable" role="button" (click)="incrementCount()">Click me to increment</div>
+    <button mat-raised-button color="accent" (click)="incrementCount()">Click me to increment</button>
     <div id="result">Current Count {{ count }}</div>
   </mat-card-content>
 </mat-card>

@@ -20,7 +20,7 @@ export class SimpleFoodComponent implements OnInit {
 
   deleteFood(food: FoodItem) {
     this.fs.deleteFood(food).subscribe(() => {
-      this.food = this.food.filter((i) => i != food);
+      this.food = this.food.filter((f) => f != food);
     });
   }
 }
