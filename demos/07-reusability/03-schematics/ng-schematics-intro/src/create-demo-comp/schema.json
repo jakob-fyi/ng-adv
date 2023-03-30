@@ -14,7 +14,7 @@
       },
       "x-prompt": "What is the name of the person we  want to greet?"
     },
-    "mdfile": {      
+    "md": {      
       "type": "string",
       "description": "the name of the markdown file in /assets/markdown without extension",
       "default": "mdfilename"
