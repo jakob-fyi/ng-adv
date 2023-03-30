@@ -1,7 +1,7 @@
 import { apply, mergeWith, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
 
-//run using: npm run build -> schematics .:create-comp --name mycomp --greeting servus --debug false
+//run using: npm run build -> schematics .:create-demo-comp --name mycomp --md mycomp --dry-run false
 
 export function createDemoComp(_options: any): Rule {
     return (tree: Tree, _context: SchematicContext) => {

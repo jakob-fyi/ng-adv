@@ -13,6 +13,6 @@ import { Component } from '@angular/core';
         </mat-card>
         `
 })
-export class Demo<%= classify(mdfile) %>Component {
-    md = '<%= mdfile %>'
+export class Demo<%= classify(md) %> Component {
+    md = '<%= md %>'
 }

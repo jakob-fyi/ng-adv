@@ -1,6 +1,6 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
-//run using: npm run build -> schematics .:create-file-withparam --greeting Ahoj --name Anika --dry-run false
+//run using: npm run build -> schematics .:create-file-with-param --greeting Ahoj --name Anika --dry-run false
 
 export function createFileWithParam(_options: any): Rule {
     return (tree: Tree, _context: SchematicContext) => {
@@ -14,7 +14,7 @@ export function createFileWithParam(_options: any): Rule {
             tree.delete(fn);
         }
 
-        tree.create('hello.js', `console.log('${greeting} ${name}!');`);
+        tree.create(fn, `console.log('${greeting} ${name}!');`);
 
         return tree;
     };
