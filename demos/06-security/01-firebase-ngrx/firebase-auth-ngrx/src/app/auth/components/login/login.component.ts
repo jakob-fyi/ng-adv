@@ -2,9 +2,10 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { combineLatestWith, map } from 'rxjs/operators';
 import { LoginCredentials } from '../../credential.model';
 import { FBAuthService } from '../../fbauth.service';
-import { combineLatestWith, map, tap } from 'rxjs/operators';
+import { AuthFacade } from '../../state/auth.facade';
 
 @Component({
   selector: 'app-login',
@@ -16,17 +17,17 @@ export class LoginComponent {
   template!: TemplateRef<any>;
 
   constructor(
-    private as: FBAuthService,
+    private af: AuthFacade,
     private dialog: MatDialog,
     private router: Router
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     this.dialog
       .open(this.template, { width: '350px' })
       .afterClosed()
       .pipe(
-        combineLatestWith(this.as.isAuthenticated()),
+        combineLatestWith(this.af.isAuthenticated()),
         map(([close, isAuthenticated]) => {
           if (isAuthenticated) {
             this.router.navigate(['demos']);
@@ -48,7 +49,7 @@ export class LoginComponent {
 
   logIn(form: FormGroup) {
     let vm: LoginCredentials = form.value;
-    this.as.logIn(vm.email, vm.password);
+    this.af.signIn(vm);
     this.dialog.closeAll();
   }
 }
