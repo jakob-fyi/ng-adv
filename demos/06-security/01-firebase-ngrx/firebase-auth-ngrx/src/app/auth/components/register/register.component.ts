@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { combineLatestWith, map } from 'rxjs/operators';
 import { FBAuthService } from '../../fbauth.service';
+import { AuthFacade } from '../../state/auth.facade';
 
 @Component({
   selector: 'app-register',
@@ -20,17 +21,17 @@ export class RegisterComponent {
   template!: TemplateRef<any>;
 
   constructor(
-    private as: FBAuthService,
+    private af: AuthFacade,
     private dialog: MatDialog,
     private router: Router
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     this.dialog
       .open(this.template, { width: '350px' })
       .afterClosed()
       .pipe(
-        combineLatestWith(this.as.isAuthenticated()),
+        combineLatestWith(this.af.isAuthenticated()),
         map(([close, isAuthenticated]) => {
           if (isAuthenticated) {
             this.router.navigate(['demos']);
@@ -57,7 +58,7 @@ export class RegisterComponent {
   });
 
   registerUser(form: FormGroup) {
-    this.as.createUser(form.value.email, form.value.passwords.password);
+    this.af.register(form.value);
   }
 
   passwordsMatch(c: AbstractControl): { invalid: boolean } | null {
