@@ -19,12 +19,16 @@ import { FoodItem } from '../food/food.model';
     `,
   styles: ['h1 { color: green; font-size: 2rem}'],
 })
-export class ComponentClassComponent {
+export class ComponentClassComponent implements OnInit {
   title = 'Food App';
-  food: FoodItem[] = [
-    { id: 2, name: 'Pad Thai', rating: 1 },
-    { id: 3, name: 'Butter Chicken', rating: 2 },
-  ];
+  food: FoodItem[] = []
+
+  ngOnInit(): void {
+    this.food = [
+      { id: 2, name: 'Pad Thai', rating: 1 },
+      { id: 3, name: 'Butter Chicken', rating: 2 },
+    ];
+  }
 
   addFood() {
     let f: FoodItem = { id: 4, name: 'Blini with Salmon', rating: 1 };
