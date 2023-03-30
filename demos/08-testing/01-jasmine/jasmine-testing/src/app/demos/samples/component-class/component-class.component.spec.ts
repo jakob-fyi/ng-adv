@@ -19,7 +19,7 @@ describe('ComponentClassComponent', () => {
     let item: FoodItem = { id: 4, name: 'Blini with Salmon', rating: 1 };
     component.ngOnInit();
     expect(component.food.length).toEqual(2);
-    component.addFood();
+    component.addFood(item);
     expect(component.food.length).toEqual(3);
     expect(component.food[2]).toEqual(item);
   });

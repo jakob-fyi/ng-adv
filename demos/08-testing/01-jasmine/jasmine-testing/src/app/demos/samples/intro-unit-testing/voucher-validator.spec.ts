@@ -71,7 +71,6 @@ describe('Class - VoucherValidator', () => {
       Paid: false,
       Expense: false,
       Remark: true,
-      Details: [],
     };
   });
 

@@ -14,7 +14,8 @@ describe('Service - No Injection - SimpleMessageService', () => {
   it('should add a message when add is called', () => {
     service = new SimpleMessageService();
     service.add('message1');
-    expect(service.messages.length).toBe(1);
+    service.add('message2');
+    expect(service.messages.length).toBe(2);
   });
 
   it('should remove all messages when clear is called', () => {

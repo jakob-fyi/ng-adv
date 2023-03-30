@@ -34,10 +34,10 @@ describe('Component - Directive - CapitalizeDirective', () => {
   it('should lowercase when clicked twice', () => {
     const debugEl: HTMLElement = fixture.debugElement.nativeElement;
     const div: HTMLElement = debugEl.querySelector('#divDirective') as HTMLElement;
+    fixture.autoDetectChanges();
     div.click();
-    fixture.detectChanges();
     div.click();
-    fixture.detectChanges();
+    // fixture.detectChanges();
 
     expect(div.style.textTransform).toBe('lowercase');
   });
