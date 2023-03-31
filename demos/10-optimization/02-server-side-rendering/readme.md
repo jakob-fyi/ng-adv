@@ -51,8 +51,13 @@ npm run dev:ssr
 
 ## Use Prerendering
 
-Investigate `routes.txt` in the root folder. It defines routes to prerender:
+Create `routes.txt` in the root folder. It defines routes to prerender:
 
+```
+/food/1
+/food/2
+/food/3
+```
 Create prerendered pages:
 
 ```bash
