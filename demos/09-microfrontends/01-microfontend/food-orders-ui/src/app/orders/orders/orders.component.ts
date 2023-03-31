@@ -12,9 +12,10 @@ import { combineLatestWith, map, startWith } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { FoodOrder, orderstatus } from '../order.model';
 import { OrdersStore } from '../orders.store';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
-  selector: 'app-orders',
+  selector: 'app-root',
   standalone: true,
   imports: [
     CommonModule,
@@ -23,6 +24,7 @@ import { OrdersStore } from '../orders.store';
     MatButtonModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss'],
@@ -30,16 +32,17 @@ import { OrdersStore } from '../orders.store';
 })
 export class OrdersComponent {
   showAll = new FormControl(false);
-  orderevents = this.store.orders$.pipe(
+
+  view = this.store.orders$.pipe(
     tap((events) => localStorage.setItem('orders', JSON.stringify(events))),
     combineLatestWith(this.showAll.valueChanges.pipe(startWith(false))),
     map(([events, showAll]) =>
       showAll
         ? events
         : events.filter(
-            (evt) =>
-              evt.data?.status == 'incoming' || evt.data?.status == 'preparing'
-          )
+          (evt) =>
+            evt.data?.status == 'incoming' || evt.data?.status == 'preparing'
+        )
     )
   );
 
