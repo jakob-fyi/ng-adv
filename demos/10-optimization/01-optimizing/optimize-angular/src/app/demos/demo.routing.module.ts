@@ -16,6 +16,7 @@ export const demoRoutes: Routes = [
   {
     path: '',
     component: DemoContainerComponent,
+    title: 'Demos Home',
     children: [
       { path: 'logger', component: LoggerComponent, title: 'Demos - Logger' },
       { path: 'bundles', component: BundlesComponent, title: 'Demos - Analyze Bundles' },
