@@ -12,9 +12,10 @@ import { combineLatestWith, map, startWith } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { FoodOrder, orderstatus } from '../order.model';
 import { OrdersStore } from '../orders.store';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
-  selector: 'app-orders',
+  selector: 'app-root',
   standalone: true,
   imports: [
     CommonModule,
@@ -23,6 +24,7 @@ import { OrdersStore } from '../orders.store';
     MatButtonModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss'],
