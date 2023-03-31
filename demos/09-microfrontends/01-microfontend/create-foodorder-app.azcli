@@ -1,7 +1,7 @@
 env=$RANDOM
-grp=az204-m09-realtime-foodorders-$env
+grp=ng-adv-foodorders-$env
 loc=westeurope
-storage=foodorders
+storage=foodorders$env
 app=foodorders-$env
 signalrhub=foodhub-$env
 topic=foodevents-$env
