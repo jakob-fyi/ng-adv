@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,10 +10,9 @@ import { CloudEvent } from '@azure/eventgrid';
 import * as SignalR from '@microsoft/signalr';
 import { tap } from 'rxjs';
 import { combineLatestWith, map, startWith } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
-import { FoodOrder, orderstatus } from '../order.model';
-import { OrdersStore } from '../orders.store';
-import { HttpClientModule } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { FoodOrder, orderstatus } from './order.model';
+import { OrdersStore } from './orders.store';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +31,9 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [OrdersStore],
 })
 export class OrdersComponent {
+
+  private hubConnection: SignalR.HubConnection | null = null;
+
   showAll = new FormControl(false);
 
   view = this.store.orders$.pipe(
@@ -46,14 +49,12 @@ export class OrdersComponent {
     )
   );
 
-  private hubConnection: SignalR.HubConnection | null = null;
-
   constructor(private store: OrdersStore) {
     this.store.init();
-    this.initSignalR();
+    this.connectSignalR();
   }
 
-  initSignalR() {
+  connectSignalR() {
     // Create connection
     this.hubConnection = new SignalR.HubConnectionBuilder()
       .withUrl(environment.funcEP)
@@ -69,7 +70,7 @@ export class OrdersComponent {
     });
   }
 
-  changeStatus(item: CloudEvent<FoodOrder>, status: orderstatus) {
+  changeOrderStatus(item: CloudEvent<FoodOrder>, status: orderstatus) {
     if (item.data) {
       item.data.status = status;
       this.store.updateOrder(item);
