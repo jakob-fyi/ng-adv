@@ -1,32 +1,25 @@
 {
-  "name": "tutorial-app",
+  "name": "ng-otherapp",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "tutorial-ws",
-  "sourceRoot": "apps/tutorial-app/src",
+  "sourceRoot": "apps/ng-otherapp/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/tutorial-app",
-        "index": "apps/tutorial-app/src/index.html",
-        "main": "apps/tutorial-app/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
-        "tsConfig": "apps/tutorial-app/tsconfig.app.json",
+        "outputPath": "dist/apps/ng-otherapp",
+        "index": "apps/ng-otherapp/src/index.html",
+        "main": "apps/ng-otherapp/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/ng-otherapp/tsconfig.app.json",
         "assets": [
-          "apps/tutorial-app/src/favicon.ico",
-          "apps/tutorial-app/src/assets"
+          "apps/ng-otherapp/src/favicon.ico",
+          "apps/ng-otherapp/src/assets"
         ],
-        "styles": [
-          "@angular/material/prebuilt-themes/indigo-pink.css",
-          "apps/tutorial-app/src/styles.scss"
-        ],
+        "styles": ["apps/ng-otherapp/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -60,10 +53,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "tutorial-app:build:production"
+          "browserTarget": "ng-otherapp:build:production"
         },
         "development": {
-          "browserTarget": "tutorial-app:build:development"
+          "browserTarget": "ng-otherapp:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -71,28 +64,24 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "tutorial-app:build"
+        "browserTarget": "ng-otherapp:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "apps/tutorial-app/**/*.ts",
-          "apps/tutorial-app/**/*.html"
+          "apps/ng-otherapp/**/*.ts",
+          "apps/ng-otherapp/**/*.html"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/tutorial-app/jest.config.ts",
+        "jestConfig": "apps/ng-otherapp/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -105,7 +94,7 @@
     "serve-static": {
       "executor": "@nrwl/web:file-server",
       "options": {
-        "buildTarget": "tutorial-app:build"
+        "buildTarget": "ng-otherapp:build"
       }
     }
   }

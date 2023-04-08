@@ -1,1 +1,11 @@
-<tutorial-ws-nx-welcome></tutorial-ws-nx-welcome> <router-outlet></router-outlet>
+<ux-split>
+  <div class="title">UX Split</div>
+  <div class="main">Main Content</div>
+  <div class="sidebar">
+    <ux-button
+      [icon]="'bug_report'"
+      [label]="'Report Bug'"
+      (onClick)="doClick()"
+    ></ux-button>
+  </div>
+</ux-split>
