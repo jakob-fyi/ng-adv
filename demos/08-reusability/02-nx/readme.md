@@ -8,189 +8,214 @@
 
 [Nx Console - VS Code Extension](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console)
 
+[Nx Console for JetBrain](https://plugins.jetbrains.com/plugin/21060-nx-console)
+
 ## Getting Started
 
-Create a workspace demo-app, add Angular:
+Install the [Nx Console - VS Code Extension](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console). It provides a nice UI for the nx commands.
 
-```typescript
-npx create-nx-workspace demo-app-ws --preset angular --appName demo-app
+To spare yourself from executing `nx-cli` using `npx` you could also install nx-cli - optional:
+
+```
+npm i -g create-nx-workspace
+npm i -g nx
 ```
 
->Note: To spare yourself from executing nx-cli using npm you could also install nx-cli: `npm i -g create-nx-workspace` and `npm i -g nx`
+Create a workspace tutorial-app-ws using the Angular preset:
+
+```typescript
+npx create-nx-workspace tutorial-ws --preset=angular-monorepo --standaloneApi false --nxCloud false --appName tutorialApp --routing true --style scss
+```
 
 ![nx-scaffold](_images/nx-scaffold.jpg)
 
-Build the app `demo-app`:
+
+Build & run the app `tutorial-app`:
 
 ```
-ng build (using default app) |
-ng build demo-app |
-npx nx build demo-app
+nx build --project tutorial-app
+nx build tutorial-app
+nx serve --project tutorial-app -o
+nx serve tutorial-app -o
 ```
 
-> Note: `npx nx builds demo-app` uses cache. It re-builds only when there are changes
+> Note: Keep the tutorital-app running in the background, just like you would do when using Angular CLI.
 
 Test the app using Jest (default)
 
 ```
-npx nx test demo-app
+nx test tutorial-app
 ```
 
 Run the app:
 
 ```
-npx nx s -o demo-app
+nx s -o tutorial-app
 ```
 
-## Button Implementation
+## Controls library
 
 Add a library project from the root of the nx workspace:
 
 ```typescript
-npx nx g @nrwl/angular:lib ux-controls --buildable --publishable --importPath my-ux-controls
+nx g @nrwl/angular:lib ux-controls 
 ```
 
->Note: `@nrwl/angular:lib` contains the Angular extensions. Scaffolding can also be done using [Nx Console](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console)
+> Note: you can replace `arambazamba` with your own npm or github scope
 
-![nx-console](_images/nx-console.jpg)
+Show a project graph in from separate terminal and keep it open:
+
+```typescript
+npx nx graph --watch
+```
+
+### Split component
 
 Add a split component. Notice that Nx registeres the component in the module 
 
 ```typescript
-nx g @nrwl/angular:component  ux-split --selector ux-split --export --project=ux-controls 
+nx g @nrwl/angular:component uxSplit --project ux-controls --export --selector ux-split
 ```
 
-Add Angular Material & Angular FlexLayout to the workspace to use it in the `ux-controls` project:
+> Note: You might have to fix the import path in `ux-controls.module.ts`
+
+Use the component in the main app. In app.module.ts import the `UxControlsModule`:
+
+```typescript
+@NgModule({
+  declarations: [AppComponent, NxWelcomeComponent],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+    UxControlsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+In app.component.html delete the default content and use the component:
+
+```html
+<ux-split></ux-split>
+```
+
+Add Angular Material to the workspace to use it in the `ux-controls` project:
 
 ```
-npm i -S @angular/material @angular/cdk @angular/flex-layout
+npm i -S @angular/material @angular/cdk
 ```
 
-Import `MatToolbarModule` & `FlexLayoutModule` in `ux-controls.module.ts`:
+Add Material to tutorial-app. Select a theme of your choice, enable typography and disable animations:
+
+```
+nx g @angular/material:ng-add --project=tutorial-app
+```
+
+![nx-material](_images/material.jpg)
+
+Import `MatToolbarModule` in `ux-controls.module.ts`:
 
 ```typescript
 ...
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { UxSplitComponent } from './ux-split/ux-split.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
-  imports: [CommonModule, MatToolbarModule, FlexLayoutModule],
+  imports: [CommonModule, MatToolbarModule],
   declarations: [UxSplitComponent],
   exports: [UxSplitComponent],
 })
 export class UxControlsModule {}
 ```
 
+Update `ux-split.component.scss`.:
+
+```css
+.maingrid {
+  display: grid;
+  grid-template-rows: 60px auto;
+  grid-template-columns: auto 180px;
+  grid-template-areas: "title title" "main sidebar";
+  height: 100vh;
+  width: 100%;
+}
+
+.title{
+  grid-area: title;
+  background-color: lavender;
+}
+
+.main{
+  padding: 1rem;
+  grid-area: main;
+  background-color: yellow;
+}
+
+.sidebar{
+  padding: 1rem;
+  grid-area: sidebar;
+  background-color: lightblue;
+}
+```
+
 Update `ux-split.component.html`:
 
 ```html
-<div
-  gdGap="0.5rem"
-  gdAreas="title title | main toolbar"
-  gdColumns="800px auto"
-  gdRows="60px auto"
-  class="container"
->
-  <div gdArea="title" class="split-title">
+<div class="maingrid">
+  <div class="title">
     <mat-toolbar mat-dialog-title>
       <mat-toolbar-row>
         <ng-content select=".title"></ng-content>
       </mat-toolbar-row>
     </mat-toolbar>
   </div>
-  <div gdArea="main" class="split-main">
+  <div class="main">
     <ng-content select=".main"></ng-content>
   </div>
-  <div gdArea="toolbar" class="split-sidebar">
+  <div class="sidebar">
     <ng-content select=".sidebar"></ng-content>
   </div>
 </div>
 ```
 
-Update `ux-split.component.scss`:
+> Note: After you have checked the layout out can delete the background colors.
 
-```css
-.container {
-  min-height: 50vh;
-  height: 100%;
-}
-
-.split-main {
-  padding: 1rem;
-}
-
-.split-sidebar {
-  padding: 1rem;
-}
-```
-
-Build the ux-controls project:
+Implement an reusable Button:
 
 ```
-nx build ux-controls
+nx g @nrwl/angular:component uxButton --project ux-controls --export 
 ```
 
-Import the `UxControlsModule` in the `demoapp` project:
+> Note: You might have to fix the import path in `ux-controls.module.ts`
+
+Update imports in ux-controls.module.ts:
 
 ```typescript
-import { UxControlsModule } from '../../../../libs/ux-controls/src/lib/ux-controls.module';
-
-@NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
-  imports: [
-    ...
-    UxControlsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-})
-export class AppModule { }
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+...
+imports: [CommonModule, MatToolbarModule, MatIconModule, MatButtonModule],
 ```
-
-Test your first component:
-
-```
-nx serve --project demoapp
-```
-
-Add a second app used for dependency graph later on:
-
-```
-nx generate @nrwl/angular:app ng-otherapp --routing --style=scss
-```
-
-Add Material to apps\demo-app:
-
-```
-nx g @angular/material:ng-add --project demoapp
-```
-
-Implement the Material Module in the lib
-
-```
-nx g module material --project=ux-controls
-```
-
-Implement an reusable Button - short guide - look up commands from ux-spilt example:
 
 ux-button.ts & ux-button.html
 
 ```typescript
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'ux-button',
   templateUrl: './ux-button.component.html',
   styleUrls: ['./ux-button.component.scss'],
 })
-export class UxButtonComponent implements OnInit {
+export class UxButtonComponent {
   @Input() disabled = false;
   @Input() label = '';
   @Input() icon = '';
   @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.icon = '';
@@ -203,32 +228,20 @@ export class UxButtonComponent implements OnInit {
 ```
 
 ```html
-<button mat-raised-button (click)="buttonClicked()" [disabled]="disabled" color="primary">
+<button
+  mat-raised-button
+  (click)="buttonClicked()"
+  [disabled]="disabled"
+  color="primary"
+>
   <mat-icon color="accent" fontIcon="bug_report"></mat-icon>
-  <span fxHide.lt-md>{{ label }}</span>
+  <span>{{ label }}</span>
 </button>
 ```
 
-Use the Button in the `demo-app-project`. Import `UxControlsModule` in `app.module.ts` :
+Use the Button in the `tutorial-app-project`. 
 
-```typescript
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UxControlsModule } from '@angular-repo/ux-controls';
-
-@NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, UxControlsModule],
-  providers: [],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
-```
-
-Add it to `app.component.ts`:
+Add it to `app.component.html`:
 
 ```html
 <div>
@@ -250,7 +263,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'demo-app';
+  title = 'tutorial-app';
 
   doClick() {
     console.log('you clicked');
@@ -258,10 +271,18 @@ export class AppComponent {
 }
 ```
 
-Test the Button:
+Your project should look like this:
+
+![with-button](_images/with-button.jpg)
+
+
+
+## Second app and dependency graph
+
+Add a second app used for dependency graph later on:
 
 ```
-npx nx s demo-app -o
+nx generate @nrwl/angular:app ng-otherapp --routing --style=scss --standaloneApi false
 ```
 
 Repate the steps in the second project in order to see a Dependency Graph where the button is used in two projects

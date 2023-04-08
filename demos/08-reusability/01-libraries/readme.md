@@ -12,7 +12,6 @@ Create a host project & Add Material & Flex Layout:
 ng new ux-lib --routing --style scss
 cd ux-lib
 ng add @angular/material
-npm i -S @angular/flex-layout
 ```
 
 >Note: Use this settings when adding material:
@@ -46,17 +45,14 @@ Update `ux-controls.module.ts`:
 ```typescript
 import { NgModule } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { SplitComponent } from './controls/split/split.component';
 
-const comps = [SplitComponent];
-
 @NgModule({
-  declarations: comps,
-  imports: [MatToolbarModule, FlexLayoutModule],
-  exports: comps,
+  declarations: [SplitComponent],
+  imports: [MatToolbarModule],
+  exports: [SplitComponent],
 })
-export class UxControlsModule {}
+export class UxControlsModule { }
 ```
 
 >Note: The "ng g c ..." cli call does not register the component in the module. This must be done manually as seen above.
@@ -68,7 +64,6 @@ Update PeerDependencies in `package.json` of the library:
     "@angular/common": "^15.2.0",
     "@angular/core": "^15.2.0",
     "@angular/animations": "^15.2.0",
-    "@angular/flex-layout": "^15.0.0-beta.42",
     "@angular/material": "^15.2.0"
   },
 ```
@@ -94,24 +89,18 @@ export class SplitComponent  {
 split.component.html
 
 ```html
-<div
-  gdGap="0.5rem"
-  gdAreas="title title | main toolbar"
-  gdColumns="800px auto"
-  gdRows="60px auto"
-  class="container"
->
-  <div gdArea="title" class="split-title">
-    <mat-toolbar mat-dialog-title>
-      <mat-toolbar-row>
+<div class="maingrid">
+  <div class="title">
+    <mat-toolbar>
+      <mat-toolbar-row color="primary">
         <ng-content select=".title"></ng-content>
       </mat-toolbar-row>
     </mat-toolbar>
   </div>
-  <div gdArea="main" class="split-main">
+  <div class="main">
     <ng-content select=".main"></ng-content>
   </div>
-  <div gdArea="toolbar" class="split-sidebar">
+  <div class="sidebar">
     <ng-content select=".sidebar"></ng-content>
   </div>
 </div>
@@ -120,17 +109,30 @@ split.component.html
 split.component.scss:
 
 ```css
-.container {
-  min-height: 50vh;
-  height: 100%;
+.maingrid {
+  display: grid;
+  grid-template-rows: 60px auto;
+  grid-template-columns: auto 180px;
+  grid-template-areas: "title title" "main sidebar";
+  height: 100vh;
+  width: 100%;
 }
 
-.split-main {
-  padding: 1rem;
+.title{
+  grid-area: title;
+  background-color: lavender;
 }
 
-.split-sidebar {
+.main{
   padding: 1rem;
+  grid-area: main;
+  background-color: yellow;
+}
+
+.sidebar{
+  padding: 1rem;
+  grid-area: sidebar;
+  background-color: lightblue;
 }
 ```
 
