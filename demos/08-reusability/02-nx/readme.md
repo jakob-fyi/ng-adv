@@ -10,36 +10,40 @@
 
 ## Getting Started
 
-Create a workspace demo-app, add Angular:
+Create a workspace tutorial-app-ws using the Angular preset:
 
 ```typescript
-npx create-nx-workspace demo-app-ws --preset angular --appName demo-app
+npx create-nx-workspace tutorial-ws --preset=angular-monorepo --standaloneApi false --nxCloud false --appName tutorialApp --routing true --style scss
 ```
-
->Note: To spare yourself from executing nx-cli using npm you could also install nx-cli: `npm i -g create-nx-workspace` and `npm i -g nx`
 
 ![nx-scaffold](_images/nx-scaffold.jpg)
 
-Build the app `demo-app`:
+To spare yourself from executing `nx-cli` using `npx` you could also install nx-cli: 
 
 ```
-ng build (using default app) |
-ng build demo-app |
-npx nx build demo-app
+npm i -g create-nx-workspace
+npm i -g nx
 ```
 
-> Note: `npx nx builds demo-app` uses cache. It re-builds only when there are changes
+Build & run the app `tutorial-app`:
+
+```
+nx build --project tutorial-app
+nx build tutorial-app
+nx serve --project tutorial-app -o
+nx serve tutorial-app -o
+```
 
 Test the app using Jest (default)
 
 ```
-npx nx test demo-app
+nx test tutorial-app
 ```
 
 Run the app:
 
 ```
-npx nx s -o demo-app
+npx nx s -o tutorial-app
 ```
 
 ## Button Implementation
@@ -160,7 +164,7 @@ Add a second app used for dependency graph later on:
 nx generate @nrwl/angular:app ng-otherapp --routing --style=scss
 ```
 
-Add Material to apps\demo-app:
+Add Material to apps\tutorial-app:
 
 ```
 nx g @angular/material:ng-add --project demoapp
@@ -209,7 +213,7 @@ export class UxButtonComponent implements OnInit {
 </button>
 ```
 
-Use the Button in the `demo-app-project`. Import `UxControlsModule` in `app.module.ts` :
+Use the Button in the `tutorial-app-project`. Import `UxControlsModule` in `app.module.ts` :
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -250,7 +254,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'demo-app';
+  title = 'tutorial-app';
 
   doClick() {
     console.log('you clicked');
@@ -261,7 +265,7 @@ export class AppComponent {
 Test the Button:
 
 ```
-npx nx s demo-app -o
+npx nx s tutorial-app -o
 ```
 
 Repate the steps in the second project in order to see a Dependency Graph where the button is used in two projects
