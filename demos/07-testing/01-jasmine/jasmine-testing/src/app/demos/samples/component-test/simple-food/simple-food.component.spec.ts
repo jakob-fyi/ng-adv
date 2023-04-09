@@ -2,11 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
-import { FoodServiceBS } from '../../food/food.service-bs';
+import { FoodService } from '../../food/food.service';
 import { foodData, serviceResult } from './simple-food-component.data';
 import { SimpleFoodComponent } from './simple-food.component';
-import { By } from '@angular/platform-browser';
-import { FoodService } from '../../food/food.service';
 
 describe('Component - Spy - FoodComponent:', () => {
   let spy: any;

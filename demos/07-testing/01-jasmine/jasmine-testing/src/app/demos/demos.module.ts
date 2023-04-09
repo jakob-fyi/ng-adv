@@ -23,8 +23,8 @@ import { ComponentEventsComponent } from './samples/component-events/component-e
 import { FoodListComponent } from './samples/component-integration/food-list/food-list.component';
 import { FoodRowComponent } from './samples/component-integration/food-row/food-row.component';
 import { IntegrationTestComponent } from './samples/component-integration/integration-test.component';
-import { MarblesComponent } from './samples/component-marbles/marbles.component';
-import { UserMarblesComponent } from './samples/component-marbles/user-marbles/user-marbles.component';
+import { MarblesComponent } from './samples/marbles/marbles.component';
+
 import { ComponentTestComponent } from './samples/component-test/component-test.component';
 import { SimpleFoodComponent } from './samples/component-test/simple-food/simple-food.component';
 import { ComponentWriteComponent } from './samples/component-write/component-write.component';
@@ -82,7 +82,6 @@ import { ReducersComponent } from './samples/ngrx-reducers/reducers/reducers.com
     PhonenumberPipe,
     SimpleAuthAsyncComponent,
     ComponentTestComponent,
-    UserMarblesComponent,
     SimpleAuthDoneComponent,
     SimpleAuthFakeAsyncComponent,
     SimpleAuthWhenStableComponent,
