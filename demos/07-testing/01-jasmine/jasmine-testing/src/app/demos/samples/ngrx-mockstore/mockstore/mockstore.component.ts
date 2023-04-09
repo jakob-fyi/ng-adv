@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getAllDemos } from 'src/app/demos/state/demo.selectors';
-import { DemoState } from 'src/app/demos/state/demos.reducer';
+import { getAllDemos } from '../../../state/demo.selectors';
+import { DemoState } from '../../../state/demos.reducer';
 
 @Component({
   selector: 'app-mockstore',

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from, map } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { FoodItem } from './food.model';
+import { environment } from '../../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class FoodService {
 
   getAvailableFood() {
     return from(this.getFood()).pipe(
-      map((items) => items.filter((item) => item.discontinued !== true)
+      map((items: FoodItem[]) => items.filter((item) => item.discontinued !== true)
       ))
   }
 

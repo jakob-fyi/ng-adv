@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-markdown-renderer',
@@ -7,14 +7,14 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./markdown-renderer.component.scss'],
 })
 export class MarkdownRendererComponent implements OnInit {
-  @Input() md: string ='';
+  @Input() md: string = '';
   panelOpenState = true;
 
-  constructor() {}
+  constructor() { }
 
   getMarkdown(): string {
     return `${environment.markdownPath}${this.md}.md`;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

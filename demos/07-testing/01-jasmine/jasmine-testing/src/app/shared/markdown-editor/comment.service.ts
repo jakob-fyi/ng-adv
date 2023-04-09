@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { CommentItem } from './comment.model';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ import { CommentItem } from './comment.model';
 export class CommentService {
   url = environment.apiUrl + 'comments';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   saveComment(item: CommentItem) {
     if (item.id === undefined) {

@@ -3,9 +3,10 @@ import { MatDrawerMode } from '@angular/material/sidenav';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, map } from 'rxjs/operators';
-import { MenuService } from 'src/app/shared/menu/menu.service';
-import { environment } from 'src/environments/environment';
+
+import { environment } from '../../../environments/environment.prod';
 import { LoadingService } from '../../shared/loading/loading.service';
+import { MenuService } from '../../shared/menu/menu.service';
 import { SidebarActions } from '../../shared/side-panel/sidebar.actions';
 import { SidePanelService } from '../../shared/side-panel/sidepanel.service';
 import { getAllDemos } from '../state/demo.selectors';
@@ -27,7 +28,7 @@ export class DemoContainerComponent implements OnInit {
   showEditor$ = this.eb
     .getCommands()
     .pipe(
-      map((action) => (action === SidebarActions.HIDE_MARKDOWN ? false : true))
+      map((action: SidebarActions) => (action === SidebarActions.HIDE_MARKDOWN ? false : true))
     );
 
   constructor(
@@ -37,7 +38,7 @@ export class DemoContainerComponent implements OnInit {
     public ls: LoadingService,
     private store: Store<DemoState>,
     private eb: SidePanelService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.setMenu();
@@ -49,7 +50,7 @@ export class DemoContainerComponent implements OnInit {
   }
 
   subscribeLoading() {
-    this.ls.getLoading().subscribe((value) => {
+    this.ls.getLoading().subscribe((value: boolean) => {
       Promise.resolve(null).then(() => (this.isLoading = value));
     });
   }
@@ -69,8 +70,8 @@ export class DemoContainerComponent implements OnInit {
     this.ms.visible$.subscribe((visible: any) => {
       result = visible
         ? {
-            'margin-left': '5px',
-          }
+          'margin-left': '5px',
+        }
         : {};
     });
     return result;
@@ -94,8 +95,8 @@ export class DemoContainerComponent implements OnInit {
         this.header =
           route.component != null
             ? `Component: ${route.component
-                .toString()
-                .substring(6, route.component.toString().indexOf('{') - 1)}`
+              .toString()
+              .substring(6, route.component.toString().indexOf('{') - 1)}`
             : '';
       });
   }

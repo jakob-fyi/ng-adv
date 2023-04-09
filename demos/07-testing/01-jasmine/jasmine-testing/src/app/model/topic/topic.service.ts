@@ -2,19 +2,17 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { environment } from "src/environments/environment";
 import { Topic } from "./topic";
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: "root"
 })
 export class TopicService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   getTopics(): Observable<Topic[]> {
-    return this.httpClient
-      .get<Topic[]>(environment.apiUrl + "topics")
-      .pipe(tap(data => console.log("data from api", data)));
+    return this.httpClient.get<Topic[]>(environment.apiUrl + "topics")
   }
 
   getTopic(id: number): Observable<Topic> {

@@ -3,8 +3,8 @@ import {
   HttpTestingController
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { environment } from 'src/environments/environment';
 import { FoodServiceBS } from './food.service-bs';
+import { environment } from '../../../../environments/environment.prod';
 
 describe('Service - HttpTest -FoodService', () => {
   let service: FoodServiceBS;
