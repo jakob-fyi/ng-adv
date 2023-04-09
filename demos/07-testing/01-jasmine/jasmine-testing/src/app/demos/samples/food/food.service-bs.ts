@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { BehaviorSubject, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { FoodItem } from './food.model';
+import { environment } from '../../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class FoodServiceBS {
   }
 
   deleteFood(item: FoodItem) {
-    let filtered = this.food.value.filter((f) => _.isEqual(f, item) == false);
+    let filtered = this.food.value.filter((f: FoodItem) => _.isEqual(f, item) == false);
     this.food.next(filtered);
     return of(true);
   }

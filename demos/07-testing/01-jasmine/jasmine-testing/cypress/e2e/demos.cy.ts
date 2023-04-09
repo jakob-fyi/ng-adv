@@ -18,7 +18,7 @@ describe('template spec', () => {
     it('Shows the correct content when clicking test pipe', () => {
       cy.get('#hamburger').first().click();
       cy.contains('Into Unit Testing').click({ force: true });
-      cy.contains('UnitTestingComponent');
+      cy.contains('Test Pipe');
     });
   });
 })

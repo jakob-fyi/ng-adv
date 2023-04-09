@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoadingService {
-  private isLoading = new BehaviorSubject(false);
-  constructor() {}
+  private isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  constructor() { }
 
-  getLoading() {
-    return this.isLoading;
+  getLoading(): Observable<boolean> {
+    return this.isLoading.asObservable();
   }
 
   setLoading(loading: boolean) {
