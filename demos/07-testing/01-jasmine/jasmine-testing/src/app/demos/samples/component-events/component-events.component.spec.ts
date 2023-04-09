@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { By } from '@angular/platform-browser';
 import { ComponentEventsComponent } from './component-events.component';
-import { MatButtonModule } from '@angular/material/button';
 
 describe('Component - Events - EventsComponent', () => {
   let component: ComponentEventsComponent;

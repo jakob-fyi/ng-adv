@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FoodItem } from '../../food/food.model';
-import { FoodServiceBS } from '../../food/food.service-bs';
+import { FoodService } from '../../food/food.service';
 
 @Component({
   selector: 'app-simple-food',
@@ -8,7 +8,7 @@ import { FoodServiceBS } from '../../food/food.service-bs';
   styleUrls: ['./simple-food.component.scss'],
 })
 export class SimpleFoodComponent implements OnInit {
-  constructor(private fs: FoodServiceBS) { }
+  constructor(public fs: FoodService) { }
 
   food: FoodItem[] = [];
 

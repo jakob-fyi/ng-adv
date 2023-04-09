@@ -11,11 +11,8 @@ describe('UseMockComponent with MockAuth Service', () => {
   beforeEach(() => {
     spy = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
     spy.isAuthenticated.and.returnValue(true);
-    comp = new UseSpyComponent(spy);
-  });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [MatCardModule],
       declarations: [UseSpyComponent],
       providers: [{ provide: AuthService, useValue: spy }],

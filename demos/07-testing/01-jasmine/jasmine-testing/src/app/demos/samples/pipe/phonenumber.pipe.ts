@@ -10,7 +10,7 @@ export class PhonenumberPipe implements PipeTransform {
         `(${value.substring(0, 3)}) ${value.substring(3, 6)} ${value.substring(6)}`
       );
     } else {
-      throw new Error('Invalid phone number');
+      return value;
     }
   }
 }
