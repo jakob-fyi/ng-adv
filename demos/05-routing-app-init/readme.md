@@ -1,5 +1,7 @@
 # Rounting & App Init
 
+[Animations Explorer](https://williamjuan027.github.io/angular-animations-explorer/)
+
 ## Routing and NgRx
 
 Add Routing:
