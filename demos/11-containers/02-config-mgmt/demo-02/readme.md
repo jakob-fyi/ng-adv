@@ -1,4 +1,4 @@
-## Inject Configuration using config service - Optional
+## Inject Configuration using a Config Service - Optional
 
 Go to [config.service.ts](/Demos/10-Optimization/01-Optimizing/ng-optimizing/src/app/shared/config/config.service.ts) of Module 9 and investigate its usage in `app.module.ts`.
 
