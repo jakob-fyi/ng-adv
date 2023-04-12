@@ -2,7 +2,7 @@
 
 ## Config from Environments Vars
 
-Open project `ng-config-env` and examine `./src/assets` and `./src/environments`
+Open project `config-ui` and examine `./src/assets` and `./src/environments`
 
 `env.js` is referenced in `index.html`:
 ```typescript
