@@ -15,7 +15,15 @@ export class MenuService {
   breakpointObserver = inject(BreakpointObserver);
 
   constructor() {
-    this.watchScreen.subscribe();
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .pipe(
+        tap((matchesBreakpoints) => {
+          console.log("matchesBreakpoint: ", matchesBreakpoints.matches);
+          this.visible$.next(matchesBreakpoints.matches ? false : true);
+          this.position$.next(matchesBreakpoints.matches ? 'over' : 'side');
+        })
+      ).subscribe();
   }
 
   visible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -28,16 +36,6 @@ export class MenuService {
   getSideNavPosition() {
     return this.position$.asObservable();
   }
-
-  watchScreen = this.breakpointObserver
-    .observe([Breakpoints.XSmall, Breakpoints.Small])
-    .pipe(
-      tap((matchesBreakpoint) => {
-        console.log(matchesBreakpoint);
-        this.visible$.next(matchesBreakpoint.matches ? false : true);
-        this.position$.next(matchesBreakpoint.matches ? 'over' : 'side');
-      })
-    );
 
   setSideNavEnabled(val: boolean) {
     this.visible$.next(val);
