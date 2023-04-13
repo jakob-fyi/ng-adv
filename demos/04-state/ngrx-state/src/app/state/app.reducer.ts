@@ -3,7 +3,6 @@ import {
   changeSideNavPosition,
   changeSideNavVisible,
   changeTitle,
-  setSideNavEnabled,
   toggleMockAuthenticated,
   toggleSideNav,
 } from './app.actions';
@@ -12,7 +11,6 @@ export const appFeatureKey = 'app';
 
 export interface AppState {
   title: string;
-  sideNavEnabled: boolean;
   sideNavVisible: boolean;
   sideNavPosition: string;
   IsMockAuthenticated: boolean;
@@ -20,7 +18,6 @@ export interface AppState {
 
 export const initialAppState: AppState = {
   title: 'Advanced Angular Development',
-  sideNavEnabled: true,
   sideNavVisible: true,
   sideNavPosition: 'side',
   IsMockAuthenticated: false,
@@ -37,11 +34,6 @@ export const appReducer = createReducer(
   on(toggleSideNav, (state) => ({
     ...state,
     sideNavVisible: !state.sideNavVisible,
-  })),
-  on(setSideNavEnabled, (state, action) => ({
-    ...state,
-    sideNavEnabled: action.enabled,
-    sideNavVisible: action.enabled,
   })),
   on(changeSideNavVisible, (state, action) => ({
     ...state,

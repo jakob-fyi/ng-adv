@@ -7,12 +7,10 @@ import { filter, map } from 'rxjs/operators';
 import {
   changeSideNavPosition,
   changeSideNavVisible,
-  setSideNavEnabled,
   toggleSideNav,
 } from './app.actions';
 import { AppState } from './app.reducer';
 import {
-  getSideNavEnabled,
   getSideNavVisible,
   getSideNavPosition,
 } from './app.selector';
@@ -25,30 +23,26 @@ export class MenuFacade {
     private mediaObserver: MediaObserver,
     private store: Store<AppState>
   ) {
-    this.initMenu();
+    // this.initMenu();
   }
 
-  private initMenu() {
-    combineLatest([
-      this.mediaObserver.asObservable().pipe(
-        filter((changes: MediaChange[]) => changes.length > 0),
-        map((changes: MediaChange[]) => changes[0])
-      ),
-      this.getSideNavEnabled(),
-    ]).subscribe(([change, enabled]) => {
-      const visible = this.adjustSidenavToScreen(change.mqAlias);
-      const position = this.adjustSidenavToScreen(change.mqAlias)
-        ? 'side'
-        : 'over';
+  // private initMenu() {
+  //   combineLatest([
+  //     this.mediaObserver.asObservable().pipe(
+  //       filter((changes: MediaChange[]) => changes.length > 0),
+  //       map((changes: MediaChange[]) => changes[0])
+  //     ),
+  //     this.getSideNavEnabled(),
+  //   ]).subscribe(([change, enabled]) => {
+  //     const visible = this.adjustSidenavToScreen(change.mqAlias);
+  //     const position = this.adjustSidenavToScreen(change.mqAlias)
+  //       ? 'side'
+  //       : 'over';
 
-      this.store.dispatch(changeSideNavPosition({ position }));
-      this.store.dispatch(changeSideNavVisible({ visible }));
-    });
-  }
-
-  getSideNavEnabled() {
-    return this.store.select(getSideNavEnabled);
-  }
+  //     this.store.dispatch(changeSideNavPosition({ position }));
+  //     this.store.dispatch(changeSideNavVisible({ visible }));
+  //   });
+  // }
 
   getSideNavVisible() {
     return this.store.select(getSideNavVisible);
@@ -56,10 +50,6 @@ export class MenuFacade {
 
   getSideNavPosition() {
     return this.store.select(getSideNavPosition);
-  }
-
-  setSideNavEnabled(enabled: boolean) {
-    this.store.dispatch(setSideNavEnabled({ enabled }));
   }
 
   adjustSidenavToScreen(mq: string): boolean {
