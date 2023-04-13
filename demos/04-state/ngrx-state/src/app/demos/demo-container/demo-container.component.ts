@@ -8,6 +8,7 @@ import { LoadingService } from '../../shared/loading/loading.service';
 import { DemoService } from '../demo-base/demo.service';
 import { SidePanelService } from 'src/app/shared/side-panel/sidepanel.service';
 import { SidebarActions } from 'src/app/shared/side-panel/sidebar.actions';
+import { MenuFacade } from 'src/app/state/menu.facade';
 
 @Component({
   selector: 'app-demo-container',
@@ -19,7 +20,7 @@ export class DemoContainerComponent implements OnInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
   ds = inject(DemoService);
-  ms = inject(MenuService);
+  ms = inject(MenuFacade);
   ls = inject(LoadingService);
   eb = inject(SidePanelService);
 

@@ -5,13 +5,14 @@ import {
   toggleMockAuthenticated,
   toggleSideNav,
 } from './app.actions';
+import { MatDrawerMode } from '@angular/material/sidenav';
 
 export const appFeatureKey = 'app';
 
 export interface AppState {
   IsMockAuthenticated: boolean;
   sideNavVisible: boolean;
-  sideNavPosition: string;
+  sideNavPosition: MatDrawerMode;
 }
 
 export const initialAppState: AppState = {
@@ -31,7 +32,7 @@ export const appReducer = createReducer(initialAppState,
   })),
   on(changeSideNavPosition, (state, action) => ({
     ...state,
-    sideNavPosition: action.position,
+    sideNavPosition: action.position as MatDrawerMode,
   })),
   on(toggleMockAuthenticated, (state, action) => {
     return { ...state, IsMockAuthenticated: !state.IsMockAuthenticated };
