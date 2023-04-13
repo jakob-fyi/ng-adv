@@ -12,7 +12,6 @@ import { CombiningComponent } from './samples/combining/combining.component';
 import { CreatingObservableComponent } from './samples/creating-observables/creating-observable.component';
 import { CustomOperatorsComponent } from './samples/custom-operators/custom-operators.component';
 import { ErrHandlingComponent } from './samples/err-handling/err-handling.component';
-import { FlexLayoutApiComponent } from './samples/flex-layout-api/flex-layout-api.component';
 import { MouseDomObservablesComponent } from './samples/mouse-dom-observables/mouse-dom-observables.component';
 import { OperatorsComponent } from './samples/operators/operators.component';
 import { SubjectsComponent } from './samples/subjects/subjects.component';
@@ -47,7 +46,6 @@ const demoRoutes: Routes = [
       { path: 'mousedomobs', component: MouseDomObservablesComponent },
       { path: 'operators', component: OperatorsComponent },
       { path: 'debounced', component: DebouncedSearchComponent },
-      { path: 'flexlayoutapi', component: FlexLayoutApiComponent },
       { path: 'unsubscribe', component: UnsubscribingComponent },
       { path: 'asyncpipe', component: AsyncPipeComponent },
       { path: 'customops', component: CustomOperatorsComponent },
@@ -70,7 +68,6 @@ const demoRoutes: Routes = [
     MouseDomObservablesComponent,
     DebouncedSearchComponent,
     OperatorsComponent,
-    FlexLayoutApiComponent,
     UnsubscribingComponent,
     SubjectsComponent,
     CustomOperatorsComponent,
