@@ -6,9 +6,7 @@ export interface AppState {
   sideNavVisible: boolean;
   sideNavPosition: string;
 }
-export const reducers: ActionReducerMap<State> = {
-  app: appReducer,
-};
+export const reducers: ActionReducerMap<State> = {app: appReducer};
 ```
 
 - Explain Action Creators and  the other artifacts:
@@ -16,14 +14,8 @@ export const reducers: ActionReducerMap<State> = {
 ```typescript
 import { createAction, props } from '@ngrx/store';
 export const toggleSideNav = createAction('[Menu] toggleSideNavVisible');
-export const changeSideNavVisible = createAction(
-  '[Menu] changeSideNavVisible',
-  props<{ visible: boolean }>()
-);
-export const changeSideNavPosition = createAction(
-  '[Menu] changeSideNavPosition',
-  props<{ position: string }>()
-);
+export const changeSideNavVisible = createAction('[Menu] changeSideNavVisible',props<{ visible: boolean }>());
+export const changeSideNavPosition = createAction('[Menu] changeSideNavPosition',props<{ position: string }>());
 ```
 
 - Explain the reducer:
@@ -38,9 +30,7 @@ export const appReducer = createReducer(initialAppState,
     ...state,
     sideNavVisible: action.visible,
   })),
-  on(changeSideNavPosition, (state, action) => ({
-    ...state,
-    sideNavPosition: action.position,
-  })),
   ...
 ```
+
+- Replace menu.service.ts with menu.facade.ts in `demo-container.component.ts` and `navbar.component.ts`

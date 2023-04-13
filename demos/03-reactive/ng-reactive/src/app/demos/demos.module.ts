@@ -31,6 +31,7 @@ import { EventbusComponent } from './samples/eventbus/eventbus.component';
 import { ListComponent } from './samples/statefull/list/list.component';
 import { KpiComponent } from './samples/statefull/kpi/kpi.component';
 import { DemoRowComponent } from './demo-row/demo-row.component';
+import { MarkdownEditorComponent } from '../shared/markdown-editor/markdown-editor.component';
 
 const demoRoutes: Routes = [
   {
@@ -100,6 +101,7 @@ const demoRoutes: Routes = [
     MarkdownModule.forRoot({
       loader: HttpClient,
     }),
+    MarkdownEditorComponent
   ],
   providers: [],
 })
