@@ -10,12 +10,11 @@ import { MenuFacade } from 'src/app/state/menu.facade';
 })
 export class NavbarComponent {
   ms = inject(MenuService);
-  mf = inject(MenuFacade);
   sns = inject(SnackbarService);
   menuItems = this.ms.getTopItems();
 
   toggleMenu() {
-    this.mf.toggleMenuVisibility();
+    this.ms.toggleMenuVisibility();
   }
 
   toggleApps() {

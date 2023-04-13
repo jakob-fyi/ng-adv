@@ -33,4 +33,4 @@ export const appReducer = createReducer(initialAppState,
   ...
 ```
 
-- Replace menu.service.ts with menu.facade.ts in `demo-container.component.ts` and `navbar.component.ts`
+- In a live demo replace menu.service.ts with menu.facade.ts in `demo-container.component.ts` and `navbar.component.ts`

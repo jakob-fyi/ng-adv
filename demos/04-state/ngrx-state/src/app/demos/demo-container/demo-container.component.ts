@@ -20,7 +20,7 @@ export class DemoContainerComponent implements OnInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
   ds = inject(DemoService);
-  ms = inject(MenuFacade);
+  ms = inject(MenuService);
   ls = inject(LoadingService);
   eb = inject(SidePanelService);
 
