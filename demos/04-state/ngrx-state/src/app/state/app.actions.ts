@@ -1,10 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 
-export const changeTitle = createAction(
-  '[App] changeTitle',
-  props<{ title: string }>()
-);
-
 export const toggleMockAuthenticated = createAction(
   '[App] toggleMockAuthenticated'
 );
