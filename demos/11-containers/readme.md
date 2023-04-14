@@ -1,4 +1,4 @@
-## Publishing Angular App using Containers and Config Injection
+## Publish & Configure Angular App using Containers
 
 - Deployment Overview & Cloud Hosting Options
   -  Using ng deploy to publish to Firebasee
