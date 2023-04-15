@@ -9,4 +9,5 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./markdown-editor.component.scss']
 })
 export class MarkdownEditorComponent {
+
 }
