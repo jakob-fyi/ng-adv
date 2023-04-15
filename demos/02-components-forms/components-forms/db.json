@@ -73,14 +73,6 @@
       "sortOrder": 2
     },
     {
-      "url": "container-presenter",
-      "topicid": 3,
-      "title": "Container / Presenter",
-      "component": "ContainerPresenterComponent",
-      "visible": true,
-      "sortOrder": 2
-    },
-    {
       "url": "formcontrol",
       "topicid": 3,
       "title": "FormControl",
@@ -117,14 +109,6 @@
       "topicid": 2,
       "title": "Typed Forms Explicit",
       "component": "ReactiveExplicitTypedComponent",
-      "visible": true,
-      "sortOrder": 5
-    },
-    {
-      "url": "type-external",
-      "topicid": 2,
-      "title": "Typed Forms Explicit Ext",
-      "component": "ReactiveExplicitTypedExternalComponent",
       "visible": true,
       "sortOrder": 5
     },
@@ -206,7 +190,7 @@
       "component": "ErrStateMatcherComponent",
       "visible": true,
       "sortOrder": 6
-    },   
+    },
     {
       "url": "ngx-formly",
       "topicid": 3,
@@ -214,6 +198,14 @@
       "component": "NgxFormlyComponent",
       "visible": true,
       "sortOrder": 8
+    },
+    {
+      "url": "container-presenter",
+      "topicid": 3,
+      "title": "Container / Presenter",
+      "component": "ContainerPresenterComponent",
+      "visible": true,
+      "sortOrder": 2
     }
   ],
   "skills": [
@@ -292,6 +284,16 @@
       "id": 5,
       "title": "laboriosam mollitia et enim quasi adipisci quia provident illum",
       "completed": false
+    }
+  ],
+  "top-links": [
+    {
+      "label": "Home",
+      "url": ""
+    },
+    {
+      "label": "Demos",
+      "url": "demos"
     }
   ]
 }

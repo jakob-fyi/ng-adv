@@ -24,7 +24,6 @@ import { NumberPickerComponent } from './samples/control-value-accessor/number-p
 import { BoxedDirective } from './samples/directive-composition/boxed.directive';
 import { DirectiveCompositionComponent } from './samples/directive-composition/directive-composition.component';
 import { ErrStateMatcherComponent } from './samples/err-state-matcher/err-state-matcher.component';
-import { ReactiveExplicitTypedExternalComponent } from './samples/explicit-typed-external/reactive-explicit-typed-external.component';
 import { ReactiveExplicitTypedComponent } from './samples/explicit-typed/reactive-explicit-typed.component';
 import { FormArrayComponent } from './samples/form-array/form-array.component';
 import { FormControlComponent } from './samples/form-control/form-control.component';
@@ -51,6 +50,9 @@ import { uxSplitComponent } from './samples/content-projection/ux-split/ux-split
 import { uxButtonComponent } from './samples/content-projection/ux-button/ux-button.component';
 import { SplitPopupComponent } from './samples/content-projection/split-popup/split-popup.component';
 import { ContainerPresenterComponent } from './samples/container-presenter/container-presenter.component';
+import { PrefixNot } from '@angular/compiler';
+import { PresenterListComponent } from './samples/container-presenter/presenter-list/presenter-list.component';
+import { PresenterEditComponent } from './samples/container-presenter/presenter-edit/presenter-edit.component';
 
 
 const appearance: MatFormFieldDefaultOptions = {
@@ -76,7 +78,6 @@ const appearance: MatFormFieldDefaultOptions = {
     TypedNonnullableComponent,
     ReactiveExplicitTypedComponent,
     GetRawValueComponent,
-    ReactiveExplicitTypedExternalComponent,
     BootstrapStandaloneComponent,
     HostBindingListenerComponent,
     TemplateVsContainerComponent,
@@ -96,7 +97,9 @@ const appearance: MatFormFieldDefaultOptions = {
     uxSplitComponent,
     uxButtonComponent,
     SplitPopupComponent,
-    ContainerPresenterComponent
+    ContainerPresenterComponent,
+    PresenterListComponent,
+    PresenterEditComponent
   ],
   imports: [
     CommonModule,
