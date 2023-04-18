@@ -170,8 +170,6 @@ export class MenuFacade {
 }
 ```
 
->Note: As `@angular/flex-layout` is in a deprecation state in future implementations you could use `@angular/cdk/layout` to detect the screen size.
-
 Add the following modules and imports to `app.module.ts`:
 
 ```typescript
