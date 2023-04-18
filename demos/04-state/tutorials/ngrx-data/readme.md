@@ -10,6 +10,12 @@ Create project:
 ng new ngrx-data
 ```
 
+Add the environments configuration:
+
+```bash
+ng generate environments
+```
+
 Add NgRx:
 
 ```bash
