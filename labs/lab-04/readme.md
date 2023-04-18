@@ -181,8 +181,6 @@ import { environment } from 'src/environments/environment';
 ...
 
 StoreModule.forRoot(reducers),
-EffectsModule.forRoot([]),
-EntityDataModule.forRoot({}),
 StoreDevtoolsModule.instrument({
     logOnly: environment.production,
 }),
