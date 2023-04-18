@@ -132,7 +132,7 @@ import {
 import { AppState } from './app.reducer';
 import {
   getSideNavPosition, getSideNavVisible
-} from './app.selector';
+} from './app.selectors';
 
 @Injectable({
   providedIn: 'root',
