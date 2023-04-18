@@ -213,8 +213,8 @@ Update the code in in app.component.html:
 ```html
 <mat-sidenav
     #sidenav
-    [opened]="ms.sideNavVisible | async"
-    [mode]="ms.sideNavPosition | async"
+    [opened]="ms.getSideNavVisible() | async"
+    [mode]="ms.getSideNavPosition() | async"
     class="sidebar">
     Sidenav content
 </mat-sidenav>
