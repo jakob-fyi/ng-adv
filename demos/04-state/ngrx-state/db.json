@@ -91,12 +91,12 @@
     {
       "id": 2,
       "name": "NgRx",
-      "completed": false
+      "completed": true
     },
     {
       "id": 3,
       "name": "Angular",
-      "completed": false
+      "completed": true
     },
     {
       "id": 4,
@@ -111,7 +111,7 @@
     {
       "id": 6,
       "name": "Node",
-      "completed": false
+      "completed": true
     },
     {
       "id": 7,
