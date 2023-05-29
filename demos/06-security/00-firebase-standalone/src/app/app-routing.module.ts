@@ -18,12 +18,11 @@ const routes: Routes = [
     path: 'skills',
     loadChildren: () =>
       import('./skills/skills.module').then((m) => m.SkillsModule),
-    // canLoad: [FirebaseAuthGuard],
-  },
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {})],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { from, interval, Observable, of } from 'rxjs';
-import { ajax } from 'rxjs/ajax';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { Observable, from, interval, of } from 'rxjs';
 import {
-  catchError,
   delay,
   filter,
   find,
@@ -10,12 +8,12 @@ import {
   mergeMap,
   pluck,
   reduce,
-  scan,
   take,
-  tap,
+  tap
 } from 'rxjs/operators';
 import { Voucher } from '../../vouchers/voucher.model';
 import { VouchersService } from '../../vouchers/voucher.service';
+import { Person } from './person';
 
 @Component({
   selector: 'app-operators',
@@ -23,22 +21,22 @@ import { VouchersService } from '../../vouchers/voucher.service';
   styleUrls: ['./operators.component.scss'],
 })
 export class OperatorsComponent implements OnInit {
-  constructor(private vs: VouchersService) {}
-
+  @ViewChild('btnSwitchMap', { static: true }) btnSwitchMap: ElementRef | undefined;
+  vs = inject(VouchersService);
   response: any;
 
   // Declarative Pattern
-  vouchers$: Observable<Voucher[]> = this.vs.getVouchers();
+  vouchers$ = this.vs.getVouchers();
 
-  vouchers: Voucher[];
+  // Imperative Pattern
+  vouchers: Voucher[] = [];
 
   ngOnInit() {
-    //Classic Subscribe Pattern -> Unsbscribe
+    //Classic Subscribe (Imperative) Pattern -> Unsbscribe
     this.vs.getVouchers().subscribe((vs) => {
       this.vouchers = vs;
     });
   }
-
   setLabel = (v: Voucher) => ({ ...v, Label: `${v.Text} costs € ${v.Amount}` });
 
   log = (msg: string, data: any) =>
@@ -76,15 +74,6 @@ export class OperatorsComponent implements OnInit {
         })
       )
       .subscribe((val) => console.log('logging', val));
-  }
-
-  useMapAndTap() {
-    this.vouchers$
-      .pipe(
-        tap((data) => console.log('logged using tap() operator: ', data)),
-        map((vs) => vs.map(this.setLabel))
-      )
-      .subscribe((data) => this.log('use pipe(), map() & tap()', data));
   }
 
   // JavaScript Array.find - not an observable operator
@@ -145,35 +134,15 @@ export class OperatorsComponent implements OnInit {
       .subscribe((d) => console.log(d));
   }
 
-  useScan() {
-    const arr = [1, 4, 6, 7, 9, 11];
-
-    from(arr)
-      .pipe(scan((acc, curr) => acc + curr, 0))
-      .subscribe((d) => console.log(d));
-  }
-
   usePluck() {
-    const item = of({
+    const person: Observable<Person> = of({
       person: 'hugo',
       children: [{ name: 'jimmy' }, { name: 'giro' }, { name: 'soi' }],
     });
 
     //pluck  deprecated
-    item.pipe(pluck('children')).subscribe(console.log);
+    person.pipe(pluck('children')).subscribe(ch => console.log("children - pluck", ch));
     //use map
-    item.pipe(map((h) => h.children)).subscribe(console.log);
-  }
-
-  useAjax() {
-    const repos$ = ajax(`https://api.github.com/users/arambazamba/repos`).pipe(
-      map((resp) => console.log('repos: ', resp)),
-      catchError((error) => {
-        console.log('error: ', error);
-        return of(error);
-      })
-    );
-
-    repos$.subscribe();
+    person.pipe(map((h: Person) => h.children)).subscribe(ch => console.log("children - map", ch));
   }
 }

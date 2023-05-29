@@ -10,8 +10,12 @@
         matInput
         placeholder="Enter your Search Term - Watch console for output"
         [formControl]="searchterm"
-
       />
     </mat-form-field>
   </mat-card-content>
 </mat-card>
+
+<div>
+  <span>You searched for:</span>
+  {{searched | async}}
+</div>

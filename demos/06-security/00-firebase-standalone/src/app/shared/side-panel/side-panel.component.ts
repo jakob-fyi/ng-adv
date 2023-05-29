@@ -1,24 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SnackbarService } from '../snackbar/snackbar.service';
-import { EventBusService } from '../event-bus/event-bus.service';
-import { SidebarActions } from '../event-bus/sidebar-actions';
+import { ThemeService } from '../theme/theme.service';
+import { SidebarActions } from './sidebar.actions';
+import { SidePanelService } from './sidepanel.service';
+import { SideNavService } from '../sidenav/sidenav.service';
 
 @Component({
   selector: 'app-side-panel',
   templateUrl: './side-panel.component.html',
   styleUrls: ['./side-panel.component.scss'],
 })
-export class SidePanelComponent implements OnInit {
-  constructor(private sns: SnackbarService, private eb: EventBusService) {}
+export class SidePanelComponent {
+  sns = inject(SnackbarService);
+  eb = inject(SidePanelService);
+  ts = inject(ThemeService);
+  editorDisplayed = false;
+  sidenav = inject(SideNavService);
+  icon = "create";
 
-  editorDisplayed: boolean = false;
-
-  ngOnInit() {
-    this.editorDisplayed = false;
+  toggleTheme() {
+    this.ts.toggleTheme();
   }
 
   toggleEditor() {
-    this.eb.triggerCmd(SidebarActions.SHOW_MARKDOWN);
+    if (this.editorDisplayed) {
+      this.eb.triggerCmd(SidebarActions.HIDE_MARKDOWN);
+    } else {
+      this.eb.triggerCmd(SidebarActions.SHOW_MARKDOWN);
+    }
+    this.editorDisplayed = !this.editorDisplayed;
+    this.icon = this.editorDisplayed ? "close" : "create";
+  }
+
+  toogleSideNav() {
+    this.sidenav.toggleMenuVisibility();
   }
 
   showUpload() {

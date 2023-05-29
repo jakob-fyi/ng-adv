@@ -11,7 +11,6 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class SideNavService {
-
   http = inject(HttpClient);
   breakpointObserver = inject(BreakpointObserver);
 
@@ -54,6 +53,6 @@ export class SideNavService {
   }
 
   getTopItems(): Observable<NavItem[]> {
-    return this.http.get<NavItem[]>(`${environment.apiUrl}top-links`);
+    return this.http.get<NavItem[]>(`${environment.api}top-links`);
   }
 }

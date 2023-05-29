@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngdemoapp": {
+    "component-forms": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -33,9 +33,9 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
           "options": {
-            "outputPath": "dist/ngdemoapp",
+            "outputPath": "dist/component-forms",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -103,19 +103,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngdemoapp:build",
+            "browserTarget": "component-forms:build",
             "ssl": true
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngdemoapp:build:production"
+              "browserTarget": "component-forms:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngdemoapp:build"
+            "browserTarget": "component-forms:build"
           }
         },
         "test": {
@@ -148,18 +148,17 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngdemoapp:serve"
+            "devServerTarget": "component-forms:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngdemoapp:serve:production"
+              "devServerTarget": "component-forms:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "ngdemoapp",
   "cli": {
     "analytics": "637494c2-de35-4c8a-a112-3acc3f3298de",
     "cache": {

@@ -31,6 +31,10 @@ import { CodeSplittingComponent } from './samples/code-splitting/code-splitting.
 import { AuxilaryRoutesComponent } from './samples/auxilary-routes/auxilary-routes.component';
 import { DiInjectComponent } from './samples/di-inject/di-inject.component';
 import { onlyPrimeMembersGuard } from './samples/multi-guard/only-prime-members.guard';
+import { RouterBindingComponent } from './samples/router-binding/router-binding.component';
+import { MarkdownRendererModule } from '../shared/markdown-renderer/markdown-renderer.module';
+import { BorderDirective, CenteredDirective } from '../shared/formatting/formatting-directives';
+import { FormattingModule } from '../shared/formatting/formatting.module';
 
 const demoRoutes: Routes = [
   {
@@ -57,6 +61,10 @@ const demoRoutes: Routes = [
       {
         path: 'locationsrv',
         component: LocServiceComponent,
+      },
+      {
+        path: 'router-bindings',
+        component: RouterBindingComponent,
       },
       {
         path: 'preload-ngrx',
@@ -119,6 +127,7 @@ const demoRoutes: Routes = [
     CodeSplittingComponent,
     AuxilaryRoutesComponent,
     DiInjectComponent,
+    RouterBindingComponent
   ],
   imports: [
     CommonModule,
@@ -128,12 +137,11 @@ const demoRoutes: Routes = [
     RouterModule.forChild(demoRoutes),
     MaterialModule,
     HttpClientModule,
-    MarkdownModule.forRoot({
-      loader: HttpClient,
-    }),
+    MarkdownRendererModule,
     SharedModule,
     StoreModule.forFeature(demosFeatureKey, demoReducer),
     EffectsModule.forFeature([DemosEffects]),
+    FormattingModule,
   ],
   providers: [],
 })

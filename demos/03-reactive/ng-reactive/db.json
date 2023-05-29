@@ -2,117 +2,87 @@
   "demos": [
     {
       "url": "langfeatures",
-      "topicid": 2,
-      "title": "Language Features",
-      "component": "LangFeaturesComponent",
-      "visible": true,
-      "sortOrder": 1
+      "title": "Language Features"
     },
     {
       "url": "asyncpipe",
-      "title": "Async Pipe",
-      "component": "AsyncPipeComponent"
-    },
-    {
-      "url": "creating",
-      "topicid": 2,
-      "title": "Creating Observables",
-      "component": "CreatingObservableComponent",
-      "visible": true,
-      "sortOrder": 2
-    },
-    {
-      "url": "unsubscribe",
-      "topicid": 3,
-      "title": "Unsubscribing",
-      "component": "UnsubscribingComponent",
-      "visible": true
-    },
-    {
-      "url": "subjects",
-      "topicid": 2,
-      "title": "Subjects",
-      "component": "SubjectsComponent",
-      "visible": true,
-      "sortOrder": "sdf"
-    },
-    {
-      "url": "imperative",
-      "topicid": 3,
-      "title": "Imperative Programming",
-      "component": "ImperativeComponent",
-      "visible": true
-    },
-    {
-      "url": "reactive",
-      "topicid": 3,
-      "title": "Reactive Programming",
-      "component": "ImperativeComponent",
-      "visible": true
-    },
-    {
-      "url": "marble-testing",
-      "title": "Marble Testing",
-      "component": "MarbleTestingComponent"
-    },
-    {
-      "url": "operators",
-      "title": "Base Operators",
-      "component": "OperatorsComponent"
-    },
-    {
-      "url": "actionstreams",
-      "title": "Action Streams",
-      "component": "ActionStreamsComponent"
-    },
-    {
-      "url": "caching",
-      "title": "Caching",
-      "component": "CachingComponent"
-    },
-    {
-      "url": "errhandling",
-      "title": "Error Handling",
-      "component": "ErrHandlingComponent"
-    },
-    {
-      "url": "combining",
-      "title": "Combination",
-      "component": "CombiningComponent"
-    },
-    {
-      "url": "transformation",
-      "title": "Transformation",
-      "component": "TransformationComponent"
-    },
-    {
-      "url": "customops",
-      "title": "Custom Operators",
-      "component": "CustomOperatorsComponent"
+      "title": "Async Pipe"
     },
     {
       "url": "debounced",
-      "title": "Debounced Search",
-      "component": "DebouncedSearchComponent"
+      "title": "Debounced Search"
+    },
+    {
+      "url": "actionstreams",
+      "title": "Action Streams"
     },
     {
       "url": "mousedomobs",
-      "title": "Mouse & DOM Events",
-      "component": "MouseDomObservablesComponent"
+      "title": "Mouse & DOM Events"
+    },
+    {
+      "url": "responsive-screen",
+      "title": "Responsive Screen"
+    },
+    {
+      "url": "creating",
+      "title": "Creating Observables"
+    },
+    {
+      "url": "operators",
+      "title": "Base Operators"
+    },
+    {
+      "url": "unsubscribe",
+      "title": "Unsubscribing"
+    },
+    {
+      "url": "imperative",
+      "title": "Imperative Reactivity"
+    },
+    {
+      "url": "reactive",
+      "title": "Declarative Reactivity"
+    },
+    {
+      "url": "subjects",
+      "title": "Subjects"
     },
     {
       "url": "statefull",
-      "title": "Statefull Service",
-      "component": "StatefullComponent"
+      "title": "Statefull Service"
     },
     {
       "url": "ebus",
-      "title": "EventBus",
-      "component": "EventbusComponent",
-      "id": 1,
-      "topicid": 1,
-      "visible": true,
-      "sortOrder": 3
+      "title": "EventBus"
+    },
+    {
+      "url": "signals-basics",
+      "title": "Signals Basics"
+    },
+    {
+      "url": "signals-eventbus",
+      "title": "Signals EventBus"
+    },
+    {
+      "url": "marble-testing",
+      "title": "Marble Testing"
+    },
+    {
+      "url": "errhandling",
+      "title": "Error Handling"
+    },
+    {
+      "url": "combining",
+      "title": "Combination"
+    },
+    {
+      "url": "transformation",
+      "title": "Transformation"
+    },
+    {
+      "url": "customops",
+      "title": "Custom Operators"
     }
   ],
   "skills": [
@@ -255,6 +225,16 @@
     },
     {
       "id": 24,
+      "title": "a new topic",
+      "sortOrder": 9
+    },
+    {
+      "id": 25,
+      "title": "a new topic",
+      "sortOrder": 9
+    },
+    {
+      "id": 26,
       "title": "a new topic",
       "sortOrder": 9
     }

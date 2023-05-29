@@ -1,57 +1,125 @@
 # Deploy Angular to Azure Static Website
 
-Sample is located [here](https://github.com/arambazamba/az-static-web-app)
+A simple sample to demonstrate Azure Static WebApps. It uses URL Rewriting in Angular. Click on "About", bookmark it and close and reopen the browser. Use your bookmark
 
-Create a static web app in Azure
+The app is using the following mock api url {{apiUrl}}. Its value will be replaced by the Azure DevOps
 
-Create a repository secret `AZURE_STATIC_WEB_APPS_API_TOKEN` in GitHub: 
+- Examine `staticwebapp.config.json`. It contains the configuration for the Azure Static Web App. Here it sets URL Rewriting rules.
 
-GitHub Action in `github/workflows/`:
+  ```
+  {
+    "navigationFallback": {
+      "rewrite": "/index.html",
+      "exclude": ["/assets/*"]
+    },
+    "responseOverrides": {
+      "404": {
+        "rewrite": "/index.html",
+        "statusCode": 200
+      }
+    }
+  }
+  ```
+- Login to Azrue
 
-```yaml
-name: Azure Static Web Apps CI/CD
+  ```bash
+  az login
+  ```
 
-on:
-  push:
+- Create the Static Web App by execution `create-static-web-app.azcli`. You will use the deployment token later in your DevOps pipeline:
+
+  ```bash
+  az group create -n $grp -l $loc
+  az staticwebapp create -n $app -g $grp
+  token=$(az staticwebapp secrets list --name $app --query "properties.apiKey")
+  ```
+
+- Import `build-deploy-swa-ado.yml` into your Azure Devops tenant. It builds and deploys the app to Azure Static Web Apps. It uses the deployment token from the previous step.
+
+  ```yaml
+  name: Deploy UI to Static Website
+
+  trigger:
     branches:
-      - main
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - main
+      include:
+        - master
 
-jobs:
-  build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
-    name: Build and Deploy Job
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-      - name: Build And Deploy
-        id: builddeploy
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "dist/static-app" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+    paths:
+      include:
+        - '<path-to-angular-app>'
 
-  close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    name: Close Pull Request Job
-    steps:
-      - name: Close Pull Request
-        id: closepullrequest
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          action: "close"
-```
+  pr: none      
+
+  pool:
+    vmImage: "ubuntu-latest"
+
+  variables:
+    nodeVer: '16.15.0'
+    apploc: '<path-to-angular-app>'
+    webApiUrl: 'https://mockapi.azurewebsites.net'
+    deploymentToken: '<enter-token-here>'
+
+  stages:
+  - stage: Build
+    displayName: Build Angular
+
+    jobs:
+      - job: Build
+        steps:
+        - task: NodeTool@0
+          inputs:
+            versionSpec: $(nodeVer)
+          displayName: Install Node $(nodeVer)        
+        - task: replacetokens@5
+          displayName: Update Config
+          inputs:
+            rootDirectory: '$(System.DefaultWorkingDirectory)/$(apploc)'
+            targetFiles: '**/*.prod.ts'
+            encoding: 'auto'
+            tokenPattern: 'doublebraces'
+            writeBOM: true
+            actionOnMissing: 'warn'
+            keepToken: false
+            actionOnNoFiles: 'continue'
+            enableTransforms: false
+            enableRecursion: false
+            useLegacyPattern: false
+            enableTelemetry: true
+        - task: Cache@2
+          inputs:
+              key: '$(System.DefaultWorkingDirectory)/$(apploc)package-lock.json'
+              path: '$(System.DefaultWorkingDirectory)/$(apploc)node_modules'
+              cacheHitVar: 'npmCache'
+        - script: npm install
+          displayName: 'npm i'
+          workingDirectory: $(apploc)
+          condition: eq(variables['npmCache'],False)
+        - script: npm run build-prod
+          displayName: 'Build App'
+          workingDirectory: $(apploc)
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: $(apploc)dist/maintenance-ui
+            ArtifactName: 'ngapp'
+            publishLocation: 'Container'
+          displayName: 'Publish Artifacts'
+
+  - stage: Deploy
+    displayName: Deploy to static WA
+    jobs:
+      - job: Deploy
+        steps:
+          - checkout: self
+            submodules: true
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+          - task: AzureStaticWebApp@0
+            inputs:
+              workingDirectory: '$(Pipeline.Workspace)'
+              app_location: 'ngapp'
+              config_file_location: 'ngapp/assets/'
+              skip_app_build: true
+              skip_api_build: true
+              azure_static_web_apps_api_token: '$(token)'
+  ```

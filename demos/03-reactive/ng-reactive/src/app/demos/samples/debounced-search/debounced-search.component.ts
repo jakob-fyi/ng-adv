@@ -1,20 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { debounceTime, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-debounced-search',
   templateUrl: './debounced-search.component.html',
   styleUrls: ['./debounced-search.component.scss'],
 })
-export class DebouncedSearchComponent implements OnInit {
-  constructor() {}
-
-  searchterm: UntypedFormControl = new UntypedFormControl('');
-
-  ngOnInit() {
-    this.searchterm.valueChanges.pipe(debounceTime(750)).subscribe((val) => {
-      console.log('Currently your searching debounced for:', val);
-    });
-  }
+export class DebouncedSearchComponent {
+  searchterm: FormControl = new FormControl('');
+  searched = this.searchterm.valueChanges.pipe(
+    debounceTime(750),
+    tap((val) => console.log('searched for', val))
+  );
 }

@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { MarkdownModule } from 'ngx-markdown';
 import { MaterialModule } from '../material.module';
 import { MarkdownEditorModule } from '../shared/markdown-editor/markdown-editor.module';
+import { MarkdownRendererModule } from '../shared/markdown-renderer/markdown-renderer.module';
 import { SharedModule } from '../shared/shared.module';
 import { DemoContainerComponent } from './demo-container/demo-container.component';
 import { demoRoutes } from './demo.routing.module';
@@ -31,6 +30,7 @@ import { NgrxEntityComponent } from './samples/ngrx-entity/ngrx-entity.component
 import { SelectorsComponent } from './samples/selectors/selectors.component';
 import { DemosEffects } from './state/demos.effects';
 import { demoReducer, demosFeatureKey } from './state/demos.reducer';
+import { FormattingModule } from '../shared/formatting/formatting.module';
 
 @NgModule({
   declarations: [
@@ -60,13 +60,11 @@ import { demoReducer, demosFeatureKey } from './state/demos.reducer';
     ReactiveFormsModule,
     RouterModule.forChild(demoRoutes),
     MaterialModule,
-    FlexLayoutModule,
     HttpClientModule,
-    MarkdownModule.forRoot({
-      loader: HttpClient,
-    }),
+    MarkdownRendererModule,
     SharedModule,
     MarkdownEditorModule,
+    FormattingModule,
     StoreModule.forFeature(demosFeatureKey, demoReducer),
     EffectsModule.forFeature([DemosEffects]),
   ],

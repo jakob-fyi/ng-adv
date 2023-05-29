@@ -1,21 +1,21 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, effect, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
+import { SidebarActions } from 'src/app/shared/side-panel/sidebar.actions';
+import { SidePanelService } from 'src/app/shared/side-panel/sidepanel.service';
 import { environment } from 'src/environments/environment';
 import { LoadingService } from '../../shared/loading/loading.service';
-import { DemoService } from '../demo-base/demo.service';
-import { SidePanelService } from 'src/app/shared/side-panel/sidepanel.service';
-import { SidebarActions } from 'src/app/shared/side-panel/sidebar.actions';
 import { SideNavService } from '../../shared/sidenav/sidenav.service';
+import { DemoService } from '../demo-base/demo.service';
 
 @Component({
   selector: 'app-demo-container',
   templateUrl: './demo-container.component.html',
   styleUrls: ['./demo-container.component.scss'],
 })
-export class DemoContainerComponent implements OnInit {
-
+export class DemoContainerComponent {
+  destroyRef = inject(DestroyRef);
   router = inject(Router);
   route = inject(ActivatedRoute);
   ds = inject(DemoService);
@@ -23,10 +23,9 @@ export class DemoContainerComponent implements OnInit {
   ls = inject(LoadingService);
   eb = inject(SidePanelService);
 
-  destroy$ = new Subject();
   title: string = environment.title;
-  header = 'Please select a demo';
   demos = this.ds.getItems();
+  selectedComponent = 'Please select a demo';
 
   isLoading = false;
 
@@ -36,26 +35,21 @@ export class DemoContainerComponent implements OnInit {
     map((visible: boolean) => { return visible ? { 'margin-left': '5px' } : {} })
   );
 
-  showMdEditor = this.eb
-    .getCommands()
-    .pipe(
-      map((action: SidebarActions) => (action === SidebarActions.HIDE_MARKDOWN ? false : true))
-    );
+  currentCMD = this.eb.getCommands()
+  showMdEditor: boolean = false;
 
   constructor() {
-    this.ls.getLoading().pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      Promise.resolve(null).then(() => (this.isLoading = value));
+    effect(() => {
+      this.showMdEditor = this.currentCMD() === SidebarActions.HIDE_MARKDOWN ? false : true;
+    });
+
+    this.ls.getLoading().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      Promise.resolve(null).then(() => { this.isLoading = value });
     });
   }
 
-
   ngOnInit() {
     this.setComponentMetadata();
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.complete();
   }
 
   rootRoute(route: ActivatedRoute): ActivatedRoute {
@@ -68,13 +62,13 @@ export class DemoContainerComponent implements OnInit {
   setComponentMetadata() {
     this.router.events
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroyRef),
         filter((event) => event instanceof NavigationEnd),
         map(() => this.rootRoute(this.route)),
         filter((route: ActivatedRoute) => route.outlet === 'primary')
       )
       .subscribe((route: ActivatedRoute) => {
-        this.header =
+        this.selectedComponent =
           route.component != null
             ? `Component: ${route.component
               .toString()

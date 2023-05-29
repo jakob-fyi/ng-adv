@@ -10,7 +10,6 @@ import { FormControlComponent } from './samples/form-control/form-control.compon
 import { FormBuilderComponent } from './samples/forms-builder/forms-builder.component';
 import { GetRawValueComponent } from './samples/get-raw-value/get-raw-value.component';
 import { HostBindingListenerComponent } from './samples/host-binding-listener/host-binding-listener.component';
-import { NgxFormlyComponent } from './samples/ngx-formly/ngx-formly.component';
 import { ReactiveCascadeComponent } from './samples/cascade/reactive-cascade.component';
 import { ReactiveExplicitTypedComponent } from './samples/explicit-typed/reactive-explicit-typed.component';
 import { ReactiveFormsComponent } from './samples/reactive-forms/reactive-forms.component';
@@ -27,6 +26,7 @@ import { ErrStateMatcherComponent } from './samples/err-state-matcher/err-state-
 import { DirectiveCompositionComponent } from './samples/directive-composition/directive-composition.component';
 import { ContentProjectionComponent } from './samples/content-projection/content-projection.component';
 import { ContainerPresenterComponent } from './samples/container-presenter/container-presenter.component';
+import { DynamicComponentsComponent } from './samples/dynamic-components/dynamic-components.component';
 
 const demoRoutes: Routes = [
   {
@@ -58,9 +58,9 @@ const demoRoutes: Routes = [
       { path: 'formarray', component: FormArrayComponent },
       { path: 'form-errors', component: FormErrorsComponent },
       { path: 'err-state-matcher', component: ErrStateMatcherComponent },
+      { path: 'dynamic-components', component: DynamicComponentsComponent },
       { path: 'validation', component: ReactiveValidationComponent },
       { path: 'cascade', component: ReactiveCascadeComponent },
-      { path: 'ngx-formly', component: NgxFormlyComponent },
       { path: 'typedforms', component: ReactiveTypedComponent },
       { path: 'typedformsexplicit', component: ReactiveExplicitTypedComponent },
       {
