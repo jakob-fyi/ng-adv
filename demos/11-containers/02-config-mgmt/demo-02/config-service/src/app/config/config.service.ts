@@ -7,6 +7,7 @@ import { BehaviorSubject, filter, map } from 'rxjs';
   providedIn: 'root',
 })
 export class ConfigService {
+
   cfg = new BehaviorSubject<AppConfig | null>(null);
 
   apiUrl = this.cfg.asObservable().pipe(
