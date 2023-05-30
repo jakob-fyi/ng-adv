@@ -1,4 +1,4 @@
-# Deploy Angular to Azure Static Website
+# Deploy Angular to Azure Static WebApps
 
 A simple sample to demonstrate Azure Static WebApps. It uses URL Rewriting in Angular. Click on "About", bookmark it and close and reopen the browser. Use your bookmark
 
@@ -6,7 +6,7 @@ The app is using the following mock api url {{apiUrl}}. Its value will be replac
 
 - Examine `staticwebapp.config.json`. It contains the configuration for the Azure Static Web App. Here it sets URL Rewriting rules.
 
-  ```
+  ```json
   {
     "navigationFallback": {
       "rewrite": "/index.html",
@@ -54,7 +54,7 @@ The app is using the following mock api url {{apiUrl}}. Its value will be replac
     vmImage: "ubuntu-latest"
 
   variables:
-    nodeVer: '16.15.0'
+    nodeVer: '16.20.0'
     apploc: '<path-to-angular-app>'
     webApiUrl: 'https://mockapi.azurewebsites.net'
     deploymentToken: '<enter-token-here>'
