@@ -3,10 +3,6 @@
 This is a simple Angular app that loads it's configuration from a `config.json` file. The configuration is injected into the app using a Config Service.
 
 ```typescript
-import { Injectable } from '@angular/core';
-import { AppConfig } from './app.config.model';
-import { HttpClient } from '@angular/common/http';
-
 @Injectable({
   providedIn: 'root',
 })
