@@ -1,25 +1,24 @@
 ## Inject Configuration using a Config Service - Optional
 
-Go to [config.service.ts](/Demos/10-Optimization/01-Optimizing/ng-optimizing/src/app/shared/config/config.service.ts) of Module 9 and investigate its usage in `app.module.ts`.
+This is a simple Angular app that loads it's configuration from a `config.json` file. The configuration is injected into the app using a Config Service.
 
 ```typescript
-import { Injectable } from '@angular/core';
-import { AppConfig } from './app.config.model';
-import { HttpClient } from '@angular/common/http';
-
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigService {
-  cfg: AppConfig;
-  constructor(private httpClient: HttpClient) {}
+  http = inject(HttpClient);
+  cfg = new BehaviorSubject<AppConfig | null>(null);
+  apiUrl = this.cfg.asObservable().pipe(
+    filter((cfg) => !!cfg),
+    map((cfg) => cfg?.apiUrl)
+  );
 
   loadConfig() {
-    return this.httpClient
-      .get<AppConfig>('./assets/config.json')
-      .toPromise()
-      .then((config) => {
-        this.cfg = config;
+    this.http.get<AppConfig>('./assets/config.json')
+      .subscribe((config: AppConfig) => {
+        this.cfg.next(config);
+        console.log('config loaded :', this.cfg);
       });
   }
 }

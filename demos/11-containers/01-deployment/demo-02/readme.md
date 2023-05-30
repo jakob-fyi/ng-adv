@@ -1,12 +1,10 @@
-# Deploy Angular to Azure Static Website
+# Deploy Angular to Azure Static WebApps
 
-A simple sample to demonstrate Azure Static WebApps. It uses URL Rewriting in Angular. Click on "About", bookmark it and close and reopen the browser. Use your bookmark
+This is a simple Angular app located the the repository [https://github.com/arambazamba/angular-devops](https://github.com/arambazamba/angular-devops) which is used to demonstrate the deployment to Azure Static WebApps.
 
-The app is using the following mock api url {{apiUrl}}. Its value will be replaced by the Azure DevOps
+- It uses URL Rewriting in Angular which is implemented in `src/assests/staticwebapp.config.json`. It contains the configuration for the Azure Static Web App. Examine the URL Rewriting rules:
 
-- Examine `staticwebapp.config.json`. It contains the configuration for the Azure Static Web App. Here it sets URL Rewriting rules.
-
-  ```
+  ```json
   {
     "navigationFallback": {
       "rewrite": "/index.html",
@@ -20,21 +18,30 @@ The app is using the following mock api url {{apiUrl}}. Its value will be replac
     }
   }
   ```
-- Login to Azrue
+
+## Deployment
+
+- Login to Azure and use your credentials:
 
   ```bash
   az login
   ```
 
-- Create the Static Web App by execution `create-static-web-app.azcli`. You will use the deployment token later in your DevOps pipeline:
+- Create the Static WebApp by execution `create-static-web-app.azcli`. The script extracts a deployment token that you will use in your Azure DevOps pipeline:
 
   ```bash
+  grp=ng-adv
+  loc=westeurope
+  app=angular-app-$RANDOM
   az group create -n $grp -l $loc
   az staticwebapp create -n $app -g $grp
   token=$(az staticwebapp secrets list --name $app --query "properties.apiKey")
+  echo "Deployment Token: $token"
   ```
 
-- Import `build-deploy-swa-ado.yml` into your Azure Devops tenant. It builds and deploys the app to Azure Static Web Apps. It uses the deployment token from the previous step.
+- Import `angular-ci-cd-swa.yml` into your Azure Devops tenant. It builds and deploys the app to Azure Static Web Apps. It uses the deployment token from the previous step.
+
+  >Note: You need to replace the `<path-to-angular-app>` with the path to your Angular app.
 
   ```yaml
   name: Deploy UI to Static Website
@@ -54,7 +61,7 @@ The app is using the following mock api url {{apiUrl}}. Its value will be replac
     vmImage: "ubuntu-latest"
 
   variables:
-    nodeVer: '16.15.0'
+    nodeVer: '16.20.0'
     apploc: '<path-to-angular-app>'
     webApiUrl: 'https://mockapi.azurewebsites.net'
     deploymentToken: '<enter-token-here>'

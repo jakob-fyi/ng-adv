@@ -1,1 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
+@import "resets.scss";
+@import "mixins.scss";
+@import "mat-theme.scss";
+@import "mat-overrides.scss";
+@import "tables.scss";
+@import "forms.scss";
