@@ -1,5 +1,5 @@
 env=$RANDOM
-grp=ng-adv-containerapps-$env
+grp=ng-adv
 loc=eastus2
 acaenv=foodcontainers-$env
 apiimg=arambazamba/config-api
