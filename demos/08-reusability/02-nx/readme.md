@@ -16,14 +16,14 @@ Install the [Nx Console - VS Code Extension](https://marketplace.visualstudio.co
 
 To spare yourself from executing `nx-cli` using `npx` you could also install nx-cli - optional:
 
-```
+```bash
 npm i -g create-nx-workspace
 npm i -g nx
 ```
 
 Create a workspace tutorial-app-ws using the Angular preset:
 
-```typescript
+```bash
 npx create-nx-workspace nx-mono-repo --preset=angular-monorepo --standaloneApi false --nxCloud false --appName tutorial-app --routing true --style scss
 ```
 
@@ -39,7 +39,7 @@ Update `apps/tutorial-app/src/app/app.component.html`:
 
 Build & run the app `tutorial-app`:
 
-```
+```bash
 nx build --project tutorial-app
 nx build tutorial-app
 nx serve --project tutorial-app -o
@@ -50,7 +50,7 @@ nx serve tutorial-app -o
 
 Test the app using Jest (default)
 
-```
+```bash
 nx test tutorial-app
 ```
 
@@ -71,13 +71,13 @@ it('should render title', () => {
 
 Add a library project from the root of the nx workspace:
 
-```typescript
+```bash
 nx g @nrwl/angular:lib ux-lib --style scss
 ```
 
 Show a project graph in from separate terminal and keep it open:
 
-```typescript
+```bash
 npx nx graph --watch
 ```
 
@@ -89,7 +89,7 @@ At the moment the graph is empty, even if you select the `tutorial-app` and `ux-
 
 Next we will create a component in the nx-mono-repo:
 
-```typescript
+```bash
 nx g @nrwl/angular:component ux-split --project ux-lib --export --selector ux-split --style scss
 ```
 
@@ -189,7 +189,7 @@ nx g @nrwl/angular:component ux-button --project ux-lib --export --selector ux-b
 
 Add Angular Material to the workspace to use it in the `ux-lib` project because it is a dependency of the `ux-button` component:
 
-```
+```bash
 npm i -S @angular/material @angular/cdk
 ```
 
@@ -206,20 +206,20 @@ export class UxLibModule { }
 
 Add Material to tutorial-app. Select a theme of your choice, enable typography and animations:
 
-```
+
+```bash
 nx g @angular/material:ng-add --project=tutorial-app
 ```
 
 ![nx-material](_images/add-material.jpg)
 
-```
 Implement an reusable Button:
 
-```
+```bash
 nx g @nrwl/angular:component uxButton --project ux-controls --export 
 ```
 
-Update ux-button.component.ts & ux-button.component.html
+Update ux-button.component.ts & ux-button.component.html:
 
 ```typescript
 @Component({
@@ -231,10 +231,10 @@ export class UxButtonComponent {
   @Input() disabled = false;
   @Input() label = '';
   @Input() icon = '';
-  @Output() click = new EventEmitter<void>();
+  @Output() onClicked = new EventEmitter<string>();
 
   buttonClicked() {
-    this.click.emit();
+    this.onClicked.emit("you clicked the button");
   }
 }
 ```
@@ -258,7 +258,7 @@ Use the Button in the `tutorial-app-project` and add it to `app.component.html` 
     <ux-button
       [label]="'Bearbeiten'"
       [icon]="'edit'"
-      (buttonClicked)="handleClick($event)"
+      (onClicked)="handleClick($event)"
     ></ux-button>
 </div>
 ```
@@ -290,13 +290,36 @@ Your project should look like this:
 
 Add a second app used for dependency graph later on:
 
-```
-nx generate @nrwl/angular:app ng-otherapp --routing --style=scss 
+```bash
+nx generate @nrwl/angular:app ng-otherapp --routing --style=scss
 ```
 
-Repate the steps in the second project in order to see a Dependency Graph where the button is used in two projects
+>Note: Choose to use a standalone component and delete app.component.html
 
+Import the `UxLibModule` in the standalone component:
+
+
+```typescript
+@Component({
+  selector: 'ux-button',
+  templateUrl: './ux-button.component.html',
+  styleUrls: ['./ux-button.component.scss'],
+})
+export class UxButtonComponent {
+  @Input() disabled = false;
+  @Input() label = '';
+  @Input() icon = '';
+  @Output() onClicked = new EventEmitter<string>();
+
+  buttonClicked() {
+    this.onClicked.emit("you clicked the button");
+  }
+}
 ```
+
+Check the dependency graph:
+
+```bash
 nx dep-graph
 ```
 
