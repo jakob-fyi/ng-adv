@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { interval, of, throwError } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { EMPTY, Observable, interval, of, throwError } from 'rxjs';
 import {
   catchError,
-  delay,
   finalize,
-  retry,
   map,
-  retryWhen,
-  tap,
+  retry,
+  tap
 } from 'rxjs/operators';
 import { DemoService } from '../../demo-base/demo.service';
 import { Voucher } from '../../vouchers/voucher.model';
@@ -19,21 +17,20 @@ import { VouchersService } from '../../vouchers/voucher.service';
   styleUrls: ['./err-handling.component.scss'],
 })
 export class ErrHandlingComponent {
-  constructor(private vs: VouchersService, private ds: DemoService) { }
+  vs = inject(VouchersService);
+  ds = inject(DemoService);
 
-
-  whereToHandle() {
-    const obs = of('cleo', 'flora', 'giro', 'soi', 3);
-    // handle exceptions here???
-    obs.pipe(
-      map((dogname) => dogname.toString().toUpperCase()),
+  completeStream() {
+    // handle exceptions in the source / service
+    const obs = (of(4, 6, 8, 'soi') as Observable<any>).pipe(
+      map((nbr) => nbr / 2),
       catchError((err) => {
         console.log('handled in catchError', err);
-        return of('');
+        return EMPTY;
       })
     );
 
-    // or here???
+    // or in the subscriber / component
     obs.subscribe(
       (val) => console.log(val),
       (err) => console.log('handled in subscribe-error', err)
@@ -43,7 +40,7 @@ export class ErrHandlingComponent {
   // Used in tryCatchAlike
   setLabel = (v: Voucher) => ({ ...v, Label: `${v.Text} costs € ${v.Amount}` });
 
-  tryCatchAlike() {
+  rethrowErr() {
     this.vs
       .getVouchers()
       .pipe(

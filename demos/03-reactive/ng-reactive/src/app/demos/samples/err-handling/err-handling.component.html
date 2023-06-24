@@ -4,25 +4,17 @@
   </mat-card-header>
 
   <mat-card-content class="cmdItems">
-    <button mat-raised-button color="accent" (click)="whereToHandle()">
-      Where to handle an error
+    <button mat-raised-button color="accent" (click)="completeStream()">
+      Complete Stream
     </button>
-    <button mat-raised-button color="accent" (click)="tryCatchAlike()">
-      catchError()
+    <button mat-raised-button color="accent" (click)="rethrowErr()">
+      Log & re-throw error
     </button>
     <button mat-raised-button color="accent" (click)="fallbackValue()">
-      Fallback instead of err
+      Provide fallback instead of error
     </button>
-
     <button mat-raised-button color="accent" (click)="useRetry()">
       Retry()
     </button>
   </mat-card-content>
-</mat-card>
-
-<mat-card appearance="outlined">
-  <mat-card-header>
-    <mat-card-title> Result </mat-card-title>
-  </mat-card-header>
-  <mat-card-content> See Console for output </mat-card-content>
 </mat-card>
