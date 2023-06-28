@@ -61,10 +61,10 @@ Update PeerDependencies in `package.json` of the library:
 
 ```typescript
 "peerDependencies": {
-    "@angular/common": "^16.1.1",
-    "@angular/core": "^16.1.1",
-    "@angular/animations": "^16.1.1",
-    "@angular/material": "^16.1.1"
+    "@angular/common": "^16.1.0",
+    "@angular/core": "^16.1.0",
+    "@angular/animations": "^16.1.0",
+    "@angular/material": "^16.1.0"
   },
 ```
 
@@ -73,17 +73,14 @@ Update PeerDependencies in `package.json` of the library:
 split.component.ts:
 
 ```typescript
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'ux-split',
   templateUrl: './split.component.html',
   styleUrls: ['./split.component.scss'],
 })
-export class SplitComponent  {
-  toolbar = '100px';
-  constructor() {}
-}
+export class SplitComponent {}
 ```
 
 split.component.html
@@ -169,7 +166,7 @@ import { UxControlsModule} from "ux-controls"
 export class AppModule { }
 ```
 
-Add it to `app.component.ts` and run `ng s -o`:
+Add it to `app.component.html` and run `ng s -o`:
 
 ```html
 <ux-split>
@@ -185,7 +182,7 @@ Test the component:
 ng serve -o --project ux-lib
 ```
 ---
-## Publish Library to GitHub Packages
+## Publish Library to GitHub Packages (Optional)
 
 In your GitHub Account go to `Settings/Developer settings`, create an new token with `write:packages` and `delete:packages` and copy it afterwards:
 
