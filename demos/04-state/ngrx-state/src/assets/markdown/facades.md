@@ -1,21 +1,24 @@
-- Facades which is basicalla a service, allow you to use NgRx in Components just like Stateful Services. 
+- Facades are optional ngrx-artifacts that a decoupling ngrx from your components. They are implemented as a service. 
+
+- The SideNavFacade implemented in `sidenav.facade.ts` encapuslates the SideNav functionality of the app. It is used in `sidenav-container.component.ts` and `navbar.component.ts`. It can betoggled also from the `side-panel.component.ts`. At the moment it is using the SideNavService and will be refactored using live coding.
 
 ```typescript
-@Injectable({
-  providedIn: 'root',
-})
-export class AppFacade {
-  constructor(private state: Store<AppState>) {}
+export class SideNavFacade {
+  breakpointObserver = inject(BreakpointObserver);
+  store = inject(Store<AppState>);
 
-  getIsMockAuthenticated() {
-    return this.state.select(getIsMockAuthenticated);
+  constructor() {...}
+
+  getSideNavVisible() {
+    return this.store.select(appState.selectSideNavVisible);
   }
 
-  toggleAuth() {
-    this.state.dispatch(toggleMockAuthenticated());
+  getSideNavPosition() {
+    return this.store.select(appState.selectSideNavPosition);
+  }
+
+  toggleMenuVisibility() {
+    this.store.dispatch(appActions.toggleSideNav());
   }
 }
 ```
-- At the same time you decouple your NgRx implementation from the component.
-
-- You can have more than one Facade for a state
