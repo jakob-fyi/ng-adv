@@ -3,6 +3,7 @@
 ## Tasks
 
 - Migrate SideNavService to use NgRx. You can take the demo app as a reference or use the guide below
+- Replace FoodService with NgRx Data
 
 ### Migrate SideNavService to use NgRx
 
@@ -175,3 +176,127 @@ Update the code in in app.component.html:
 ```
 
 Congratulations! You have successfully migrated the responsive SideNav to NgRx.
+
+### Replace FoodService with NgRx Data
+
+NgRx Data is a library that provides a single API for all CRUD operations. It is based on NgRx and uses the Entity pattern.
+
+NgRx Data installation:
+
+```bash
+npm i -S @ngrx/data
+```
+
+Define the entity metadata in `food.metadata.ts`:
+
+```typescript
+import { EntityMetadataMap } from '@ngrx/data';
+import { FoodItem } from '../food.model';
+
+export function sortByName(a: FoodItem, b: FoodItem): number {
+  let comp = a.name.localeCompare(b.name);
+  return comp;
+}
+
+export const entityMetadata: EntityMetadataMap = {
+  Food: {
+    selectId: (food: FoodItem) => food.id,
+    sortComparer: sortByName,
+  },
+};
+
+export const entityConfig = {
+  entityMetadata,
+};
+```
+
+Because we are using a non-default url for the backend, we need to configure the default data service. Create `food-data-service.config.ts`:
+
+```typescript
+import { DefaultDataServiceConfig } from '@ngrx/data';
+import { environment } from '../../../environments/environment';
+
+export const foodDataServiceConfig: DefaultDataServiceConfig = {
+    root: `${environment.api}/`,
+    timeout: 3000,
+    entityHttpResourceUrls: {
+        Food: {
+            entityResourceUrl: `${environment.api}/food/`,
+            collectionResourceUrl: `${environment.api}/food`
+        },
+    }
+}
+```
+
+Add the following code to `app.config.ts` in order to configure the entity data service:
+
+```typescript 
+providers: [
+  ...
+  { provide: DefaultDataServiceConfig, useValue: foodDataServiceConfig },
+  provideEffects(),
+  provideEntityData(entityConfig, withEffects())
+  ...
+  ]
+```
+
+Create `food/state/food-entity.service.ts`:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory} from '@ngrx/data';
+import { FoodItem } from '../food.model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FoodEntityService extends EntityCollectionServiceBase<FoodItem> {
+  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
+    super('Food', serviceElementsFactory);
+  }
+}
+```
+
+Replace the FoodService with the FoodEntityService in `food-container.component.ts`. You will need to add the required imports by yourself: 
+
+```typescript
+fs = inject(FoodEntityService);
+  food = this.fs.entities$;
+  selected: FoodItem | undefined = undefined;
+
+  ngOnInit(): void {
+    this.fs.getAll();
+  }
+
+  selectFood(f: FoodItem) {
+    this.selected = { ...f };
+  }
+
+  addFood() {
+    this.selected = new FoodItem();
+  }
+
+  saveFood(f: FoodItem) {
+    if (f.id == 0) {
+      this.fs.add(f);
+    } else {
+      this.fs.update(f);
+    }
+  }
+```
+
+Now it is time to test the app. Run the app and check the [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd). You should see the initial state of the app. Navigate to the Food page and add a new food item. You should see the new item in the Redux DevTools.
+
+Navigate to the About page and back to the Food page. Notice that the `@ngrx/data/query-all` action is dispatched. This is because the data service is configured to load all food items in `ngOnInit`. We will fix this in the next step using the loaded flag.
+
+```typescript
+  ngOnInit(): void {
+    this.fs.loaded$.subscribe((loaded) => {
+      if (!loaded) {
+        this.fs.getAll();
+      }
+    })
+  }
+```
+
+You can now delete `food.service.ts` as it is no longer needed. If you need to override individual methods you could implement a custom data service. See the [documentation](https://ngrx.io/guide/data/entity-dataservice) for more details.
