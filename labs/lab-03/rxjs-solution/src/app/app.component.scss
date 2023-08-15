@@ -21,9 +21,12 @@
 
 .gd-mainrow {
   grid-area: mainrow;
-  background-color: lightgray;
 }
 
 .sidenav{
-  height: 80vh;
+  height: 100%;
+}
+
+.mat-drawer-container {
+  height: 100%;
 }
