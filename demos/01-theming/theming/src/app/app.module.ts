@@ -30,7 +30,7 @@ import { LoadingService } from './shared/loading/loading.service';
   ],
   providers: [
     LoadingService,
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
 })
