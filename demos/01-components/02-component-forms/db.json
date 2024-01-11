@@ -1,6 +1,10 @@
 {
   "demos": [
     {
+      "url": "control-flow",
+      "title": "Control Flow"
+    },
+    {
       "url": "standalone",
       "title": "Standalone Component"
     },

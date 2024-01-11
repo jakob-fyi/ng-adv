@@ -2,6 +2,8 @@
 
 ## Demos
 
+- Using & Migrating to Control Flow Syntax
+- Deferred Loading
 - Standalone Directives & Directives Composition Api
 - Components and Required Inputs
 - Content Projection 
@@ -18,3 +20,9 @@
 - Implementing Custom Controls using ControlValueAccessor
 - Typed Forms Validation & Custom Validators
 - Handling FormErrors & ErrorStateMatcher
+
+## Control Flow Migration
+
+```bash
+ng g @angular/core:control-flow
+```
