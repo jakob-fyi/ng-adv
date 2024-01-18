@@ -1,14 +1,16 @@
 # Using @ngrx/signal in Angular Apps
 
-## Tasks
+In this lab we will solve the following tasks:
 
--   Setup a basic signal store
--   Provide CRUD and loading for food using `@ngrx/signal Signal Store`
--   Implement a container presenter pattern using signals and `input signals`
+-   Take the `standalone app` from `lab-01` and setup a basic `SignalStore`
+-   Re-build the classic Angular solution from `lab-02` to `lab-04`
+-   Provide CRUD and loading for food using `@ngrx/signal`
+-   Implement a `container presenter pattern`
+-   Enhance our app by using `rxMethod` and persist data to the server
 
 ### Setup a basic signal store
 
--   Install `@ngrx/signal`:
+-   Copy the `signals-starter` and install `@ngrx/signal`:
 
     ```bash
     npm i -S @ngrx/signal
@@ -137,7 +139,7 @@
     })),
     ```
 
-    >Note: With the current implementation we are not persisting the changes to the server. 
+    > Note: With the current implementation we are not persisting the changes to the server.
 
 -   In order to be able to load the initial item from the server, we will need to modify `food.store.ts` and it's withMethods section and add a `loadFood()` method:
 
@@ -164,7 +166,7 @@
     })
     ```
 
-- Just to check add the following to the template and run the app:
+-   Just to check add the following to the template and run the app:
 
     ```html
     <div>
@@ -185,11 +187,11 @@
     ng g c food/food-edit
     ```
 
-- Food list should look like this. You can take the lab from the previous module as a reference: 
+-   Food list should look like this. You can take the lab from the previous module as a reference:
 
     ![Food List](_images/food-list.png)
 
-- Add the following to the `food-list.component.ts`:
+-   Add the following to the `food-list.component.ts`:
 
     ```typescript
     @Component({
@@ -220,9 +222,9 @@
             this.onFoodSelected.emit(p);
         }
     }
-    ```        
+    ```
 
-- Add the following to the `food-list.component.html`:
+-   Add the following to the `food-list.component.html`:
 
     ```html
     <mat-card appearance="outlined">
@@ -258,7 +260,7 @@
     </mat-card>
     ```
 
--  Add the following to the `food-list.component.scss`:
+-   Add the following to the `food-list.component.scss`:
 
     ```css
     mat-card {
@@ -273,12 +275,12 @@
     cursor: pointer;
     }
     ```
-- Food edit should look like this. You can take the lab from the previous module as a reference: 
+
+-   Food edit should look like this. You can take the lab from the previous module as a reference:
 
     ![Food edit](_images/food-edit.png)
 
-
-- Add the following to the `food-edit.component.ts`:
+-   Add the following to the `food-edit.component.ts`:
 
     ```typescript
     @Component({
@@ -318,7 +320,7 @@
     }
     ```
 
-- Add the following to the `food-edit.component.html`:
+-   Add the following to the `food-edit.component.html`:
 
     ```html
     <mat-card appearance="outlined">
@@ -365,7 +367,7 @@
     </mat-card>
     ```
 
-- Last but not least we will hook the container / presenter pattern by replacing the temporary html in `food.component.html`:
+-   Last but not least we will hook the container / presenter pattern by replacing the temporary html in `food.component.html`:
 
     ```html
     <app-food-list  [food]="store.food()" (onFoodSelected)="selectFood($event)"></app-food-list>
@@ -375,7 +377,7 @@
     }
     ```
 
-- Add the following css to `food.component.scss`:
+-   Add the following css to `food.component.scss`:
 
     ```css
     .addRow{
@@ -383,25 +385,152 @@
         flex-direction: row;
         justify-content: space-between;
     }
-    ```    
+    ```
 
-- Add the following code to `food.component.ts`. This time you will have to add the imports by yourself:
+-   Add the following code to `food.component.ts`. This time you will have to add the imports by yourself:
 
     ```typescript
     export class FoodComponent {
-    store = inject(foodStore)
+        store = inject(foodStore)
 
-    selectFood(item: FoodItem) {
-        this.store.selectFood(item.id);
-    }
+        selectFood(item: FoodItem) {
+            this.store.selectFood(item.id);
+        }
 
-    saveFood(item: FoodItem) {
-        if (item.id) {
-                this.store.updateFood(item);
+        saveFood(item: FoodItem) {
+            if (item.id) {
+                    this.store.updateFood(item);
             } else {
                 this.store.addFood(item);
             }
             this.store.clearSelected();
         }
     }
+    ```
+
+### Enhance our app by using `rxMethod` and persist data to the server
+
+- The loadFood() method works, but the pattern we used to solve it is not very elegant. We can do better by using rxMethod(). 
+
+- Extend the state with a loading flag. Do not forget to update the initial state:
+   
+    ```typescript
+    type FoodState = {
+        food: FoodItem[];
+        selectedFood: FoodItem | null;
+        loading: boolean;
+    }
+    ```   
+
+- Let's look at the current implementation:   
+
+    ```typescript   
+    loadFood: () => {
+        patchState(store, { loading: true });
+        service.getFood().subscribe((items) => {
+            patchState(store, { food: items })
+        })
+    }
+    ```
+
+- Execute `npm i -S @ngrx/operators`. The operators library provides some useful operators that are frequently used when managing state and side effects. It adds [tapResponse](https://ngrx.io/guide/operators/operators#tapresponse) which you will have to import and we will use in the next step.
+
+- Replace it with this implementation:
+
+    ```typescript
+    loadFood: rxMethod<void>(
+        pipe(
+            switchMap(() => {
+                patchState(store, { loading: true });
+                return service.getFood().pipe(
+                    tapResponse({
+                        next: (food) => patchState(store, { food }),
+                        error: console.error,
+                        finalize: () => patchState(store, { loading: false }),
+                    })
+                );
+            })
+        )
+    ),
+    ```
+
+- Implement a `logError` function:
+
+    ```typescript
+    const logError = (error: Error) => console.error("error: ", error);
+    ```    
+
+- In `food.store.ts` try to update the following methods and let the use `rxMethod` and `food.service.ts`. A possible solution will be provided in the next step:
+      
+    -   addFood()
+    -   updateFood()
+    -   removeFood()
+
+    >Note: If you are using @ngrx/data you could also combine the data service with the signal store. 
+
+- Update  `addFood()`:
+
+    ```typescript
+    addFood: rxMethod<FoodItem>(
+        pipe(
+            switchMap((food: FoodItem) => {
+                patchState(store, { loading: true });
+                return service.addFood(food).pipe(
+                    tapResponse({
+                        next: (food) => {
+                            const items = [...store.food(), food];
+                            patchState(store, { food: items })
+                        },
+                        error: logError,
+                        finalize: () => patchState(store, { loading: false }),
+                    })
+                );
+            })
+        )
+    ),
+    ```
+- Update  `updateFood()`:
+
+    ```typescript
+    updateFood: rxMethod<FoodItem>(
+        pipe(
+            switchMap((food: FoodItem) => {
+                patchState(store, { loading: true });
+                return service.updateFood(food).pipe(
+                    tapResponse({
+                        next: (food) => {
+                            const allItems = [...store.food()];
+                            const idx = allItems.findIndex((f: FoodItem) => f.id === food.id);
+                            allItems[idx] = food;
+                            patchState(store, { food: allItems })
+                        },
+                        error: logError,
+                        finalize: () => patchState(store, { loading: false }),
+                    })
+                );
+            })
+        )
+    ),
+    ```
+
+- Update  `removeFood()`:
+
+    ```typescript
+    removeFood: rxMethod<number>(
+        pipe(
+            switchMap((id: number) => {
+                patchState(store, { loading: true });
+                return service.deleteFood(id).pipe(
+                    tapResponse({
+                        next: (food) => {
+                            const items = store.food().filter((f: FoodItem) => f.id !== id);
+                            patchState(store, { food: items })
+                        },
+                        error: logError,
+                        finalize: () => patchState(store, { loading: false }),
+                    })
+                );
+            })
+        )
+    ),
     ```
