@@ -6,10 +6,9 @@ import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldDefaultOptions,
 } from '@angular/material/form-field';
-import { MaterialModule } from '../material.module';
+
 import { MarkdownRendererModule } from '../shared/markdown-renderer/markdown-renderer.module';
-import { SharedModule } from '../shared/shared.module';
-import { UxLibModule } from '../shared/ux-lib/ux-lib.module';
+
 import { DemoContainerComponent } from './demo-container/demo-container.component';
 import { DemoRoutingModule } from './demo.routing.module';
 import { ActionStreamsComponent } from './samples/action-streams/action-streams.component';
@@ -54,7 +53,14 @@ const appearance: MatFormFieldDefaultOptions = {
 };
 
 @NgModule({
-  declarations: [
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DemoRoutingModule,
+    HttpClientModule,
+    MarkdownRendererModule,
+    StandaloneComponent,
     DemoContainerComponent,
     ReactiveFormsComponent,
     FormBuilderComponent,
@@ -91,18 +97,6 @@ const appearance: MatFormFieldDefaultOptions = {
     PresenterListComponent,
     PresenterEditComponent,
     DynamicComponentsComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DemoRoutingModule,
-    MaterialModule,
-    HttpClientModule,
-    MarkdownRendererModule,
-    StandaloneComponent,
-    UxLibModule
   ],
   providers: [
     {
