@@ -1,26 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuFacade } from '../../state/menu.facade';
-import { NavItem } from './navItem';
+import { Component, inject } from '@angular/core';
+import { NavbarService } from './navbar.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { LogoutBtnComponent } from '../../firebase-auth/components/logout-btn/logout-btn.component';
+import { CurrentUserComponent } from '../../firebase-auth/components/current-user/current-user.component';
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
+  imports: [AsyncPipe, RouterLink, MatToolbarModule, LogoutBtnComponent, CurrentUserComponent],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent implements OnInit {
-  constructor(private ms: MenuFacade) { }
-
-  items: NavItem[];
-
-  ngOnInit() {
-    this.items = [
-      { title: 'Home', url: '/' },
-      { title: 'Products', url: '/products' },
-      { title: 'About', url: '/about' },
-    ];
-  }
-
-  toggleMenu() {
-    this.ms.toggleMenuVisibility();
-  }
+export class NavbarComponent {
+  ns = inject(NavbarService);
+  items = this.ns.getTopItems();
 }

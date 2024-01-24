@@ -1,4 +1,4 @@
-# Using @ngrx/signal in Angular Apps
+# Using @ngrx/signals in Angular Apps
 
 In this lab we will solve the following tasks:
 
@@ -10,10 +10,10 @@ In this lab we will solve the following tasks:
 
 ### Setup a basic Signal Store
 
--   Copy the `signals-starter` and install `@ngrx/signal`:
+-   Copy the `signals-starter` and install `@ngrx/signals`:
 
     ```bash
-    npm i -S @ngrx/signal
+    npm i -S @ngrx/signals
     ```
 
 -   Add a `food/food.model.ts` to the project. You could copy this file from a previous lab:
@@ -100,7 +100,7 @@ In this lab we will solve the following tasks:
 
 -   Test your work by running the app with `ng s -o`
 
-### Provide CRUD and loading for food using `@ngrx/signal Signal Store`
+### Provide CRUD and loading for food using `@ngrx/signals Signal Store`
 
 -   Next we will use withComputed() to expose count as a store property. To do so update food.store.ts. To not forget to update the corresponding html template:
 

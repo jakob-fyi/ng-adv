@@ -1,23 +1,30 @@
-import { Component } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
-import { AuthFacade } from './auth/state/auth.facade';
-import { MenuFacade } from './state/menu.facade';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { tap } from 'rxjs';
+import { FirebaseAuthService } from './firebase-auth/firebase-auth.service';
+import { IntroComponent } from './shared/intro/intro.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    NavbarComponent,
+    SidebarComponent,
+    IntroComponent,
+    AsyncPipe
+  ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  menuVisible$ = this.mf.getSideNavVisible();
-  menuPosition$ = this.mf.getSideNavPosition();
-  isAuthenticated: Observable<boolean> = of(false);
-
-  constructor(public mf: MenuFacade, public auth: AuthFacade) { }
-
-  ngOnInit() {
-    this.isAuthenticated = this.auth
-      .isAuthenticated()
-      .pipe(tap((auth) => console.log('auth changed to authenticated: ', auth)));
-  }
+  title = 'Food App';
+  img = 'food.png'
+  auth = inject(FirebaseAuthService);
+  isAuthenticated = this.auth
+    .isAuthenticated()
+    .pipe(tap((auth) => console.log('authState changed to:', auth)));
 }

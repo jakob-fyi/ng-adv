@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { MenuFacade } from './state/menu.facade';
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, NavbarComponent, SidebarComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'Food App';
-
-  constructor(public ms: MenuFacade) { }
+  title = 'food-app';
 }
