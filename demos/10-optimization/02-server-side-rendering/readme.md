@@ -9,6 +9,19 @@
 
 -   Examine `package.json` and note the `@angular/ssr`and `express` dependencies. Also note the `serve:ssr:food-shop-ssr` script. It starts the Node Express server and runs the Angular app in SSR mode.
 
+- Examine the registration of [ClientHydration](https://angular.io/guide/hydration) in `app.config.ts`:
+
+    ```typescript
+    export const appConfig: ApplicationConfig = {
+    providers: [
+        provideHttpClient(),
+        provideRouter(foodRoutes),
+        provideClientHydration(),
+        provideAnimations()
+    ]
+    };
+    ```
+
 -   Add Angular Material:
 
     ```
@@ -50,6 +63,10 @@
     ng s -o
     ```
 
+- Examine the page source and note that the content is rendered by the browser using javascript:
+
+    ![page-source](_images/page-source.png)
+    
 -   Execute Node Express on `http://localhost:4000` and compare `First Contentful Paint (FCP)` values and examine the html source. Also create Lighthouse Audit and compare time used for `Scripting`
 
     ```bash

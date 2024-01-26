@@ -1,11 +1,7 @@
 # Optimizing Angular Apps
 
--   Build more accessible Angular apps
 -   Server Side Rendering (SSR)
-
-## Build more accessible Angular apps
-
-[Lab: Angular A11y](https://codelabs.developers.google.com/angular-a11y)
+-   Build more accessible Angular apps
 
 ## Server Side Rendering (SSR)
 
@@ -58,6 +54,8 @@
     ```bash
     ng s -o
     ```
+
+-     
 
 -   Execute Node Express on `http://localhost:4000` and compare `First Contentful Paint (FCP)` values and examine the html source. Also create Lighthouse Audit and compare time used for `Scripting`
 
@@ -128,3 +126,7 @@
     ```
 
 -   Examine `dist\food-list-ssr\browser\food\...`
+
+## Build more accessible Angular apps
+
+[Lab: Angular A11y](https://codelabs.developers.google.com/angular-a11y)
