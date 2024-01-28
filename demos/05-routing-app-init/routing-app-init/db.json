@@ -10,11 +10,6 @@
       "title": "App Init",
       "id": 1
     },
-        {
-      "url": "code-splitting",
-      "title": "Code Splitting",
-      "id": 91
-    },
     {
       "url": "multi-guard",
       "title": "Route Guards",
@@ -36,19 +31,9 @@
       "id": 13
     },
     {
-      "url": "locationsrv",
-      "title": "Location Service",
-      "id": 77
-    },
-    {
       "url": "router-bindings",
       "title": "Component Input Bindings",
       "id": 44
-    },
-    {
-      "url": "auxiliary-routes",
-      "title": "Auxiliary Routes",
-      "id": 114
     },
     {
       "url": "ngrx-routing",
