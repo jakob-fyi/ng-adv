@@ -1,19 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Skill } from '../skills.model';
+
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Skill } from './skills.model';
 
 @Component({
-  selector: 'app-skills-list',
-  templateUrl: './skills-list.component.html',
-  styleUrls: ['./skills-list.component.scss'],
+  selector: 'app-skills',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './skills.component.html',
+  styleUrl: './skills.component.scss'
 })
-export class SkillsListComponent implements OnInit {
+export class SkillsComponent {
   @Input() skills: Skill[] = [];
   @Output() skillsSaved: EventEmitter<Skill[]> = new EventEmitter<Skill[]>();
-  skillToAdd: string = '';
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  skillToAdd = '';
 
   removeSkill(item: Skill): void {
     this.skills = this.skills.filter((s) => s.id !== item.id);
