@@ -9,5 +9,4 @@ import { MarkdownRendererComponent } from '../../../shared/markdown-renderer/mar
     standalone: true,
     imports: [MarkdownRendererComponent, TakeUntilDestroyedComponent],
 })
-export class UnsubscribingComponent {
-}
+export class UnsubscribingComponent { }
