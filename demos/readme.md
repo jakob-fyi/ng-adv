@@ -4,7 +4,7 @@ Im Seminar "Advanced Angular Development" bringen wir Ihre Angular Kenntnisse au
 
 Wir beginnen mit der Implementierung eines Angular Material Themes und lernen dabei die Kurs-Demo-App kennen, welche wir im Laufe des Kurses erweitern. Standalone Components sowie, deren Konzepte und Migration bilden den Einstieg ins Module Components & Forms Deep Dive. 
 
-Ein Schwerpunkt des Kurses ist der Themenblock Reactive Programming mit RxJs und State Management mit NgRx & Signals, sowie Advanced Routing und App Initialization. 
+Ein Schwerpunkt des Kurses ist der Themenblock Reactive Programming und State Management mit RxJS, NgRx & Signals, sowie Advanced Routing und App Initialization. 
 
 Wir diskutieren die Implementierung von Authentifizierung mit Cloud Identities und Tests mit Jasmine, Jest, Cypress. Zusätzlich behandeln wir die Themen Reusability mit Libraries, Schematics, Nx & Angular Elements und Optimierung von Anwendungen, Server Side Rendering, sowie A11y.
 
@@ -57,22 +57,19 @@ Neue Themengebiete werden anhand von Folien und Demos erarbeitet. Am Ende der Mo
 
 ## Mastering Reactive Programming using RxJS
 
-- Imperative vs Functional Programming
-- Immutability & Pure Functions
 - Introduction to RxJS
 - Observables, Observers & Use Cases
+- Imperative vs Declarative Reactive Programming
 - Data- vs Action-Streams
 - Mouse & DOM Events as Observables
-- Implementing Side Effects using tap
-- Base Operators: Mapping, Filtering, Merging, Scanning, ...
 - Unsubscribing DestroyRef & takeUntilDestroyed
-- Imperative vs Declarative Reactive Programming
+- Implementing Side Effects using tap
+- Base Operators: Mapping, Filtering, Merging, 
 - Understanding Marble Diagrams & Debugging Observables
 - Marble-testing RxJS
 - Combination & Transformation Operators
 - Retry & Error Handling Strategies
 - Implementing & Testing Custom Observable Operators
-- Communication between using Event Bus Pattern
 
 ## Advanced State Management using NgRx
 
@@ -95,6 +92,7 @@ Neue Themengebiete werden anhand von Folien und Demos erarbeitet. Am Ende der Mo
 - Signals vs Observables: Synchronous  & Asynchronous Reactive Programming
 - Signal Queries: viewChild, -Children, contentChild, -Children
 - Nesting Components using Signals, input, output & model
+- Communication between Components using Event Bus Pattern
 - Signals & Ngrx Interoperability
 - Creating a Signals Store using @ngrx/signals
 - Side Effects using rxMethod
