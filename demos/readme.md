@@ -98,6 +98,7 @@ Neue Themengebiete werden anhand von Folien und Demos erarbeitet. Am Ende der Mo
 - Introduction to Signals (Writable, Computed, Effects)
 - Working with Arrays
 - Signals vs Observables: Synchronous  & Asynchronous Reactive Programming
+- Nesting Components using Signals, input, output & model
 - Signals & Ngrx Interoperability
 - Creating a Signals Store using @ngrx/signals
 - Local Change Detection using Signals
