@@ -7,34 +7,32 @@ import { MatButtonModule } from '@angular/material/button';
 import { ColumnDirective, RowDirective, GapDirective, CenteredDirective, BorderDirective, HeightDirective, WidthDirective, BoxedDirective } from './formatting/formatting-directives';
 
 @NgModule({
-  declarations: [
-    uxButtonComponent,
-    uxSplitComponent
-  ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    ColumnDirective,
-    RowDirective,
-    GapDirective,
-    CenteredDirective,
-    BorderDirective,
-    HeightDirective,
-    WidthDirective,
-    BoxedDirective
-  ],
-  exports: [
-    uxButtonComponent,
-    uxSplitComponent,
-    ColumnDirective,
-    RowDirective,
-    GapDirective,
-    CenteredDirective,
-    BorderDirective,
-    HeightDirective,
-    WidthDirective,
-    BoxedDirective
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatButtonModule,
+        ColumnDirective,
+        RowDirective,
+        GapDirective,
+        CenteredDirective,
+        BorderDirective,
+        HeightDirective,
+        WidthDirective,
+        BoxedDirective,
+        uxButtonComponent,
+        uxSplitComponent
+    ],
+    exports: [
+        uxButtonComponent,
+        uxSplitComponent,
+        ColumnDirective,
+        RowDirective,
+        GapDirective,
+        CenteredDirective,
+        BorderDirective,
+        HeightDirective,
+        WidthDirective,
+        BoxedDirective
+    ],
 })
 export class UxLibModule { }
