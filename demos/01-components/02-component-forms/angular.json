@@ -9,7 +9,7 @@
         "@schematics/angular:component": {
           "style": "scss"
         }
-      },
+      },    
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -126,6 +126,7 @@
   "cli": {
     "cache": {
       "enabled": false
-    }
+    },
+    "analytics": false
   }
 }
