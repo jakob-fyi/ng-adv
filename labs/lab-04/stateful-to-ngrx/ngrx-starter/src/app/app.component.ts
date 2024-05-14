@@ -7,6 +7,7 @@ import { LoadingService } from './shared/loading/loading.service';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { SideNavService } from './shared/sidenav/sidenav.service';
+import { SideNavFacade } from './state/sidenav.facades';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,10 @@ export class AppComponent {
   ls = inject(LoadingService);
   changeDetector = inject(ChangeDetectorRef);
   isLoading = this.ls.getLoading();
+
+  nav = inject(SideNavFacade);
+  sidenavMode = this.nav.getSideNavPosition();
+  sidenavVisible = this.nav.getSideNavVisible();
 
   constructor() {
     this.ms.sideNavPosition.subscribe((currentMode) => { this.mode = currentMode });
