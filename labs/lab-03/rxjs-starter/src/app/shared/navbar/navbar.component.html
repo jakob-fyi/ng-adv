@@ -1,4 +1,7 @@
 <mat-toolbar color="primary">
+  @if(sidenav.sideNavVisible | async){
+    <div _ngcontent-ng-c2997983983="" class="hamburgerMenu"><mat-icon _ngcontent-ng-c2997983983="" role="img" color="accent" class="mat-icon notranslate mat-accent material-icons mat-ligature-font" aria-hidden="true" ng-reflect-color="accent" data-mat-icon-type="font">menu</mat-icon></div>
+  }
   <mat-toolbar-row>
     <div *ngFor="let item of items | async" [routerLink]="[item.url]">
       {{ item.title }}
